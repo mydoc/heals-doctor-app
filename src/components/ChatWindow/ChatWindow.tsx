@@ -5,7 +5,7 @@ import AttachmentIcon from '@mui/icons-material/Attachment';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import ImageIcon from '@mui/icons-material/Image';
 import React, { useEffect, useRef, useState } from 'react';
-import { Episode } from '../../hooks/useEpisodes';
+import { Episode } from '../../interfaces';
 
 
 const AlwaysScrollToHere = () => {

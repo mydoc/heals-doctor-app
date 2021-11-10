@@ -14,8 +14,8 @@ import { DataContext } from './contexts/DataContext';
 import ChatManager from './components/ChatManager/ChatManager';
 import Generator from './utils/Generator';
 import { Database } from "./Database";
-import useEpisodes, { Episode } from './hooks/useEpisodes';
-import { IChatMessage } from './interfaces';
+import useEpisodes from './hooks/useEpisodes';
+import { ChatMessage, Episode, IChatMessage } from './interfaces';
 
 function App() {
 
@@ -24,18 +24,20 @@ function App() {
 
   // data state
   const { data, session, setData, setSession } = useContext(DataContext);
-  const { episodes, setEpisodes, activeEpisode, setActiveEpisode } = useEpisodes();
 
-  const [isBotChat, setIsBotChat] = useState(false);
+  const {
+    episodes, episodeId, episode: activeEpisode, messages, participants,
+    setEpisodes, setEpisodeId, setEpisode: setActiveEpisode, setMessages, setParticipants
+  } = useEpisodes(session);
 
   // initialise data
-
   useEffect(() => {
     setData(Generator.populateRandomData(Database));
     const doctor = data.users.find((user) => user.username === 'doctor')!;
     setSession(doctor);
   }, []);
 
+  const [isBotChat, setIsBotChat] = useState(false);
 
   useEffect(() => {
 
@@ -44,29 +46,30 @@ function App() {
       setTimeout(() => {
 
         const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
-        setActiveEpisode({...activeEpisode!, messages: [...activeEpisode!.messages, _createNewMessage(Generator.getSentence(), other[0].id)]});
+        const newMessage = new ChatMessage({
+          "datetime": new Date(),
+          "message": Generator.getSentence(),
+          "userId": other[0].id
+        }, other[0]);
+        setMessages([...messages, newMessage]);
       }, Math.random() * 3000 + 300);
 
       setIsBotChat(false);
     }
 
-  }, [isBotChat])
+  }, [isBotChat]);
 
-
-  const _createNewMessage = (message: string, userId: number): IChatMessage => {
-    const newMessage: IChatMessage = {
-      "datetime": new Date(),
-      "message": message,
-      "userId": userId
+  const handleSendMessage = (message: string) => {
+    if(session) {
+      const newMessage = new ChatMessage({
+        "datetime": new Date(),
+        "message": message,
+        "userId": session.id
+      }, session);
+      setMessages([...messages, newMessage]);
+  
+      setIsBotChat(true);
     }
-
-    return newMessage;
-  }
-
-
-  const handleSendMessage = (msg: string) => {
-    setActiveEpisode({...activeEpisode!, messages: [...activeEpisode!.messages, _createNewMessage(msg, session!.id)]});
-    setIsBotChat(true);
   }
 
   const handleActivateEpisode = (episode: Episode) => {
@@ -98,7 +101,7 @@ function App() {
               </Splitter>
             </Splitter>
             <Splitter primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={30} percentage={true}>
-          <PatientManager episode={activeEpisode} onSendMessage={ (e) => { handleSendMessage(e) }}/>
+          <PatientManager episode={activeEpisode ? activeEpisode : null} onSendMessage={ (e) => { handleSendMessage(e) }}/>
                 <EpisodeManager />
             </Splitter>
         </Splitter>

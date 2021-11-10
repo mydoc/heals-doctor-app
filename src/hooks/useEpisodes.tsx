@@ -1,26 +1,36 @@
-import { IAppointment, IProvider, IEpisode, IChatMessage, User } from '../interfaces';
+import { User, Episode, ChatMessage, IUser } from '../interfaces';
 import { DataContext, IDataContext } from '../contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
 
-export class Episode implements IEpisode {
-  id: number = 0;
-
-  participants: User[] = [];
-  messages: IChatMessage[] = [];
-  providerId: number = 0;
-
-  constructor(episode: IEpisode, public appointments: IAppointment[], public provider: IProvider) {
-    Object.assign(this, episode);
-  }
-}
-
-export const useEpisodes = () => {
-  const { data, session } = useContext<IDataContext>(DataContext);
+export const useEpisodes = (session: IUser | null) => {
+  const { data } = useContext<IDataContext>(DataContext);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [activeEpisode, setActiveEpisode] = useState<Episode | null>(null);
+
+  const [episodeId, setEpisodeId] = useState<number>(0);
+  const [episode, setEpisode] = useState<Episode>();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [participants, setParticipants] = useState<User[]>([]);
 
   useEffect(() => {
-    if (session) {
+      const episode = data.episodes.find((e) => e.id === episodeId);
+      const appointments = data.appointments.filter((a) => a.episodeId === episodeId);
+      const provider = data.providers.find((p) => p.id === episode?.providerId);
+
+      if(episode && appointments && provider) {
+          setEpisode(new Episode(episode, appointments, provider))
+      }
+
+  }, [episodeId])
+
+  useEffect(() => {
+      if(episode) {
+          episode.messages = messages;
+          setEpisode(episode);
+      }
+    }, [messages])
+
+  useEffect(() => {
+    if (session?.id) {
 
       const getEpisodesByUser = (userId: number): Episode[] => {
         const userEpisodes = data.episodes.filter(episode => {
@@ -40,13 +50,17 @@ export const useEpisodes = () => {
 
       const userEpisodes = getEpisodesByUser(session.id);
       setEpisodes(userEpisodes);
+      if(userEpisodes.length > 0) setEpisodeId(userEpisodes[0].id);
 
     } else {
       setEpisodes([]);
     }
-  }, [session, data.episodes, data.providers, data.appointments]);
+  }, [session]);
 
-  return { episodes, setEpisodes, activeEpisode, setActiveEpisode };
+  return {
+    episodes, episodeId, episode, messages, participants,
+    setEpisodes, setEpisodeId, setEpisode, setMessages, setParticipants
+  };
 }
 
 export default useEpisodes;

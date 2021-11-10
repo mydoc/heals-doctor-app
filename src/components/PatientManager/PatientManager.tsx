@@ -7,8 +7,7 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Episode } from '../../hooks/useEpisodes';
-
+import { Episode } from '../../interfaces';
 
 interface PatientManagerProps {
     episode: Episode | null;

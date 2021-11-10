@@ -248,6 +248,29 @@ export interface IAppointment {
   status: AppointmentStatus
 }
 
+export class Episode implements IEpisode {
+  id: number = 0;
+
+  participants: User[] = [];
+  messages: IChatMessage[] = [];
+  providerId: number = 0;
+
+  constructor(episode: IEpisode, public appointments: IAppointment[], public provider: IProvider) {
+    Object.assign(this, episode);
+  }
+}
+
+export class ChatMessage implements IChatMessage {
+  userId: number = 0;
+  message: string = '';
+  datetime: Date = new Date();
+
+  constructor(template: IChatMessage, public user: IUser) {
+    Object.assign(this, template);
+  }
+  
+}
+
 export enum IInvoiceStatus {
   New, // no payment method
   Pending, // has payment method, waiting to be executeced

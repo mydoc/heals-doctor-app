@@ -7,9 +7,9 @@ import { useContext, useState } from "react";
 // icons
 import ChatIcon from '@mui/icons-material/Chat';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Episode } from "../../hooks/useEpisodes";
 import { DataContext } from '../../contexts/DataContext';
 import ChatCard from "../ChatCard/ChatCard";
+import { Episode } from "../../interfaces";
 
 
 interface ChatManagerProp {
