@@ -16,6 +16,7 @@ import Generator from './utils/Generator';
 import { Database } from "./Database";
 import useEpisodes from './hooks/useEpisodes';
 import { ChatMessage, Episode, IChatMessage } from './interfaces';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 function App() {
 
@@ -26,48 +27,50 @@ function App() {
   const { data, session, setData, setSession } = useContext(DataContext);
 
   const {
-    episodes, episodeId, episode: activeEpisode, messages, participants,
-    setEpisodes, setEpisodeId, setEpisode: setActiveEpisode, setMessages, setParticipants
+    episodes, episode: activeEpisode,
+    setEpisodes, setEpisode: setActiveEpisode, setMessages, setParticipants
   } = useEpisodes(session);
-
-  // initialise data
-  useEffect(() => {
-    setData(Generator.populateRandomData(Database));
-    const doctor = data.users.find((user) => user.username === 'doctor')!;
-    setSession(doctor);
-  }, []);
 
   const [isBotChat, setIsBotChat] = useState(false);
 
   useEffect(() => {
 
-    if (isBotChat) {
+    console.log('isBotChat', isBotChat, 'activeEpisode', !!activeEpisode)
+
+    if (isBotChat && activeEpisode) {
 
       setTimeout(() => {
-
+        console.log('Bot sending...');
         const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
         const newMessage = new ChatMessage({
           "datetime": new Date(),
           "message": Generator.getSentence(),
           "userId": other[0].id
         }, other[0]);
-        setMessages([...messages, newMessage]);
-      }, Math.random() * 3000 + 300);
+        setMessages([...activeEpisode.messages, newMessage]);
+        console.log('Bot sending... end');
+      }, Math.random() * 1000 + 300);
 
       setIsBotChat(false);
     }
 
   }, [isBotChat]);
 
+  const handleLogIn = () => {
+    setData(Generator.populateRandomData(Database));
+    const doctor = data.users.find((user) => user.username === 'doctor')!;
+    setSession(doctor);
+  }
+
   const handleSendMessage = (message: string) => {
-    if(session) {
+    if (session && activeEpisode) {
       const newMessage = new ChatMessage({
         "datetime": new Date(),
         "message": message,
         "userId": session.id
       }, session);
-      setMessages([...messages, newMessage]);
-  
+      setMessages([...activeEpisode.messages, newMessage]);
+
       setIsBotChat(true);
     }
   }
@@ -76,6 +79,8 @@ function App() {
 
     setActiveEpisode(episode);
   }
+
+  if (!session) return (<button onClick={handleLogIn}>Login</button>)
 
   return (
     <div className="App">

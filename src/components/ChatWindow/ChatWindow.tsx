@@ -5,7 +5,7 @@ import AttachmentIcon from '@mui/icons-material/Attachment';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import ImageIcon from '@mui/icons-material/Image';
 import React, { useEffect, useRef, useState } from 'react';
-import { Episode } from '../../interfaces';
+import { ChatMessage, Episode } from '../../interfaces';
 
 
 const AlwaysScrollToHere = () => {
@@ -31,7 +31,6 @@ const ChatWindow = ({ episode, onSubmit }: ChatWindowProps) => {
 
     const handleMessageSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
         onSubmit(message);
         setMessage('');
     }

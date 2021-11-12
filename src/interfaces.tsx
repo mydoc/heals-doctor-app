@@ -252,7 +252,7 @@ export class Episode implements IEpisode {
   id: number = 0;
 
   participants: User[] = [];
-  messages: IChatMessage[] = [];
+  messages: ChatMessage[] = [];
   providerId: number = 0;
 
   constructor(episode: IEpisode, public appointments: IAppointment[], public provider: IProvider) {
@@ -268,7 +268,7 @@ export class ChatMessage implements IChatMessage {
   constructor(template: IChatMessage, public user: IUser) {
     Object.assign(this, template);
   }
-  
+
 }
 
 export enum IInvoiceStatus {

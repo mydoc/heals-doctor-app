@@ -6,26 +6,26 @@ export const useEpisodes = (session: IUser | null) => {
   const { data } = useContext<IDataContext>(DataContext);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
 
-  const [episodeId, setEpisodeId] = useState<number>(0);
   const [episode, setEpisode] = useState<Episode>();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [participants, setParticipants] = useState<User[]>([]);
 
   useEffect(() => {
-      const episode = data.episodes.find((e) => e.id === episodeId);
-      const appointments = data.appointments.filter((a) => a.episodeId === episodeId);
-      const provider = data.providers.find((p) => p.id === episode?.providerId);
+    if (episode) {
+      const appointments = data.appointments.filter((a) => a.episodeId === episode?.id);
+      const provider = data.providers.find((p) => p.id === episode?.providerId)!;
 
-      if(episode && appointments && provider) {
-          setEpisode(new Episode(episode, appointments, provider))
-      }
-
-  }, [episodeId])
+      episode.provider = provider;
+      episode.appointments = appointments;
+    }
+  }, [episode])
 
   useEffect(() => {
-      if(episode) {
-          episode.messages = messages;
-          setEpisode(episode);
+    if (episode) {
+      episode.messages = messages;
+
+      TODO: message changes are not populated to all views
+
       }
     }, [messages])
 
@@ -50,7 +50,7 @@ export const useEpisodes = (session: IUser | null) => {
 
       const userEpisodes = getEpisodesByUser(session.id);
       setEpisodes(userEpisodes);
-      if(userEpisodes.length > 0) setEpisodeId(userEpisodes[0].id);
+      if(userEpisodes.length > 0) setEpisode(userEpisodes[0]);
 
     } else {
       setEpisodes([]);
@@ -58,8 +58,8 @@ export const useEpisodes = (session: IUser | null) => {
   }, [session]);
 
   return {
-    episodes, episodeId, episode, messages, participants,
-    setEpisodes, setEpisodeId, setEpisode, setMessages, setParticipants
+    episodes, episode,
+    setEpisodes, setEpisode, setMessages, setParticipants
   };
 }
 
