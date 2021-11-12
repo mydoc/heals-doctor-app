@@ -194,37 +194,37 @@ export enum UserRole {
 }
 
 export class User implements IUser {
-    contact?: string;
-    email?: string;
-    imgUrl?: string;
-    nationalId?: string;
-    role: UserRole = UserRole.patient;
-    id: number = 0;
-    username: string = '';
-    password: string = '';
-    episodes: any[] = [];
+  id: number;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  birthdate: Date;
+  contact?: string;
+  email?: string;
+  imgUrl?: string;
+  nationalId?: string;
+  role: UserRole;
 
-    firstName: string = '';
-    lastName: string = '';
-    gender: string = '';
-    birthdate: Date = new Date();
+  constructor(template: IUser) {
+    this.id = template.id;
+    this.username = template.username;
+    this.password = template.password;
+    this.firstName = template.firstName;
+    this.lastName = template.lastName;
+    this.gender = template.gender;
+    this.birthdate = template.birthdate;
+    this.contact = template.contact;
+    this.email = template.email;
+    this.imgUrl = template.imgUrl;
+    this.nationalId = template.nationalId;
+    this.role = template.role;
+  }
 
-    medicalCondition: string = '';
-    medication: string = '';
-    allergies: string = '';
-
-    is2faEnabled: boolean = false;
-
-    static create(template: IUser): User {
-        let user = new User();
-        Object.assign(user, template);
-
-        return user;
-    }
-
-    get name(): string {
-        return this.firstName + " " + this.lastName;
-    }
+  get name(): string {
+      return this.firstName + " " + this.lastName;
+  }
 }
 
 export interface IChatMessage {
@@ -249,24 +249,31 @@ export interface IAppointment {
 }
 
 export class Episode implements IEpisode {
-  id: number = 0;
 
-  participants: User[] = [];
-  messages: ChatMessage[] = [];
-  providerId: number = 0;
+  id: number;
+  providerId: number;
 
-  constructor(episode: IEpisode, public appointments: IAppointment[], public provider: IProvider) {
-    Object.assign(this, episode);
+  constructor(episode: IEpisode,
+    public appointments: IAppointment[],
+    public provider: IProvider,
+    public messages: ChatMessage[],
+    public participants: User[]
+    ) {
+    this.id = episode.id;;
+    this.providerId = episode.providerId;
   }
+  
 }
 
 export class ChatMessage implements IChatMessage {
-  userId: number = 0;
-  message: string = '';
-  datetime: Date = new Date();
+  userId: number;
+  message: string;
+  datetime: Date;
 
-  constructor(template: IChatMessage, public user: IUser) {
-    Object.assign(this, template);
+  constructor(template: IChatMessage, public user: User) {
+    this.userId = template.userId;
+    this.message = template.message;
+    this.datetime = template.datetime;
   }
 
 }

@@ -14,7 +14,7 @@ import { Episode } from "../../interfaces";
 
 interface ChatManagerProp {
     episodes: Episode[];
-    activeEpisode?: Episode;
+    activeEpisode: Episode | null;
     onActivateChatCard: (e: Episode) => void;
 }
 

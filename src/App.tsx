@@ -15,8 +15,7 @@ import ChatManager from './components/ChatManager/ChatManager';
 import Generator from './utils/Generator';
 import { Database } from "./Database";
 import useEpisodes from './hooks/useEpisodes';
-import { ChatMessage, Episode, IChatMessage } from './interfaces';
-import { ConstructionOutlined } from '@mui/icons-material';
+import { ChatMessage, Episode, User } from './interfaces';
 
 function App() {
 
@@ -27,34 +26,40 @@ function App() {
   const { data, session, setData, setSession } = useContext(DataContext);
 
   const {
-    episodes, episode: activeEpisode,
-    setEpisodes, setEpisode: setActiveEpisode, setMessages, setParticipants
+    episodes, activeEpisode,
+    setEpisodes, setActiveEpisode
   } = useEpisodes(session);
-
   const [isBotChat, setIsBotChat] = useState(false);
 
   useEffect(() => {
 
     console.log('isBotChat', isBotChat, 'activeEpisode', !!activeEpisode)
 
-    if (isBotChat && activeEpisode) {
-
-      setTimeout(() => {
-        console.log('Bot sending...');
-        const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
-        const newMessage = new ChatMessage({
-          "datetime": new Date(),
-          "message": Generator.getSentence(),
-          "userId": other[0].id
-        }, other[0]);
-        setMessages([...activeEpisode.messages, newMessage]);
-        console.log('Bot sending... end');
-      }, Math.random() * 1000 + 300);
-
+    if (isBotChat) {
       setIsBotChat(false);
-    }
 
-  }, [isBotChat]);
+      if(activeEpisode) {
+
+        const botSendChat = () => {
+          console.log('Bot sending...');
+          const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
+          const newMessage = new ChatMessage({
+            "datetime": new Date(),
+            "message": Generator.getSentence(),
+            "userId": other[0].id
+          }, other[0]);
+          
+          console.log('Bot sending... end', newMessage);
+          activeEpisode.messages.push(newMessage);
+        }
+
+
+        setTimeout(() => { 
+          botSendChat();
+        }, Math.random() * 1000 + 300);
+      }
+    }
+  }, [isBotChat, activeEpisode, session]);
 
   const handleLogIn = () => {
     setData(Generator.populateRandomData(Database));
@@ -68,8 +73,11 @@ function App() {
         "datetime": new Date(),
         "message": message,
         "userId": session.id
-      }, session);
-      setMessages([...activeEpisode.messages, newMessage]);
+      }, new User(session));
+
+      console.log('handleSendMessage', message);
+      
+      activeEpisode.messages.push(newMessage);
 
       setIsBotChat(true);
     }
@@ -87,7 +95,7 @@ function App() {
       <GlobalStyles />
         <Splitter primaryIndex={1} secondaryInitialSize={260} secondaryMinSize={50}>
         <Splitter vertical primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={20} percentage={true}>
-          <ChatManager episodes={episodes!} activeEpisode={ activeEpisode ? activeEpisode : undefined } onActivateChatCard={(e) => handleActivateEpisode(e) }/>
+          <ChatManager episodes={episodes!} activeEpisode={ activeEpisode } onActivateChatCard={(e) => handleActivateEpisode(e) }/>
               <Splitter vertical enabled={true} primaryIndex={0} secondaryInitialSize={50} secondaryMinSize={50}>
               <div>
                 <MenuBar><VideoCameraFrontIcon /><MenuLabel>Appointments</MenuLabel></MenuBar>
@@ -106,7 +114,7 @@ function App() {
               </Splitter>
             </Splitter>
             <Splitter primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={30} percentage={true}>
-          <PatientManager episode={activeEpisode ? activeEpisode : null} onSendMessage={ (e) => { handleSendMessage(e) }}/>
+          <PatientManager episode={activeEpisode} onSendMessage={ (e) => { handleSendMessage(e) }}/>
                 <EpisodeManager />
             </Splitter>
         </Splitter>
