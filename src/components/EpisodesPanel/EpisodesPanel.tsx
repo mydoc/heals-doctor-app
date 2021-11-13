@@ -41,7 +41,7 @@ const EpisodesPanel = ({ episodes, onActivateChatCard, activeEpisode }: Episodes
                 <MenuLabel>{`${filter} Episodes (${getFilteredEpisodes().length})`}</MenuLabel>
                 <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget) }><MenuIcon /></IconButton></div>
             </MenuBar>
-            <Popper anchorEl={anchor} id="expand-menu-chat" open={isMenuOpened}>
+            <Popper anchorEl={anchor} id="expand-menu-chat" open={isMenuOpened} placement='bottom-start'>
                 <ClickAwayListener onClickAway={() => setAnchor(null)}>
                     <Paper>
                         <MenuList>
