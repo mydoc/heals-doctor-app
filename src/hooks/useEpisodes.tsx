@@ -1,26 +1,14 @@
-import { IAppointment, IProvider, IEpisode, IChatMessage, User } from '../interfaces';
+import { User, Episode, ChatMessage, IUser } from '../interfaces';
 import { DataContext, IDataContext } from '../contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
 
-export class Episode implements IEpisode {
-  id: number = 0;
-
-  participants: User[] = [];
-  messages: IChatMessage[] = [];
-  providerId: number = 0;
-
-  constructor(episode: IEpisode, public appointments: IAppointment[], public provider: IProvider) {
-    Object.assign(this, episode);
-  }
-}
-
-export const useEpisodes = () => {
-  const { data, session } = useContext<IDataContext>(DataContext);
+export const useEpisodes = (session: IUser | null) => {
+  const { data } = useContext<IDataContext>(DataContext);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [activeEpisode, setActiveEpisode] = useState<Episode | null>(null);
 
   useEffect(() => {
-    if (session) {
+    if (session?.id) {
 
       const getEpisodesByUser = (userId: number): Episode[] => {
         const userEpisodes = data.episodes.filter(episode => {
@@ -28,25 +16,47 @@ export const useEpisodes = () => {
         });
 
         const episodes: Episode[] = userEpisodes.map((episode) => {
-          const participants = episode.participants.map((participant) => User.create(participant));
+          const participants = episode.participants.map((participant) => new User(participant));
           const provider = data.providers.find((provider) => provider.id === episode.providerId)!;
           const appointments = data.appointments.filter((appt) => episode.id === appt.episodeId) ?? [];
+          const messages = episode.messages.map((m) => new ChatMessage(m, participants.find(p => p.id === m.userId)!));
           episode.participants = participants;
-          return new Episode(episode, appointments, provider);
+          return new Episode(episode, appointments, provider, messages, participants);
         });
 
         return episodes;
       }
 
       const userEpisodes = getEpisodesByUser(session.id);
+
       setEpisodes(userEpisodes);
+
+      if(userEpisodes.length > 0) setActiveEpisode(userEpisodes[0]);
 
     } else {
       setEpisodes([]);
     }
-  }, [session, data.episodes, data.providers, data.appointments]);
+  }, [session, data]);
 
-  return { episodes, setEpisodes, activeEpisode, setActiveEpisode };
+  useEffect(() => {
+    if (activeEpisode) {
+      setEpisodes(prev => prev.map(e => e.id === activeEpisode.id ? activeEpisode : e));
+    }
+  }, [activeEpisode])
+
+
+  const addMessage = (message: ChatMessage) => {
+    setActiveEpisode((prev) => { return { ...prev!, messages: [...prev!.messages, message] } });
+  }
+
+  const selectActiveEpisode = (episode: Episode) => {
+    setActiveEpisode(episode);
+  }
+
+  return {
+    episodes, activeEpisode,
+    selectActiveEpisode, addMessage
+  };
 }
 
 export default useEpisodes;
