@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
 
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-wrap: break-word;
 
     .key-bar {

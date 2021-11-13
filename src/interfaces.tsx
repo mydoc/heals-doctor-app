@@ -233,11 +233,17 @@ export interface IChatMessage {
   datetime: Date;
 }
 
+export enum EpisodeStatus {
+  Opened = 'Opened',
+  Closed = 'Closed'
+}
+
 export interface IEpisode {
   id: number;
   participants: IUser[];
   providerId: number;
   messages: IChatMessage[];
+  status: EpisodeStatus
 }
 
 export interface IAppointment {
@@ -252,6 +258,7 @@ export class Episode implements IEpisode {
 
   id: number;
   providerId: number;
+  status: EpisodeStatus;
 
   constructor(episode: IEpisode,
     public appointments: IAppointment[],
@@ -261,8 +268,10 @@ export class Episode implements IEpisode {
     ) {
     this.id = episode.id;;
     this.providerId = episode.providerId;
+    this.status = episode.status;
   }
-  
+
+
 }
 
 export class ChatMessage implements IChatMessage {

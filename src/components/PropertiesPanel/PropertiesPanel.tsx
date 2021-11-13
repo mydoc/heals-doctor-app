@@ -3,6 +3,7 @@ import { Wrapper, Content } from "./PropertiesPanel.styles";
 import InfoIcon from '@mui/icons-material/Info';
 import MenuBar from "../MenuBar/MenuBar";
 import MenuLabel from "../MenuLabel/MenuLabel";
+import React from "react";
 
 
 interface PropertiesPanelProps {
@@ -21,10 +22,14 @@ const PropertiesPanel = ({ instance }: PropertiesPanelProps) => {
                         <div className="value-area">{instance.id}</div>
                     </div>
                     <div>
+                        <div className="key-bar">status</div>
+                        <div className="value-area">{instance.status}</div>
+                    </div>
+                    <div>
                         <div className="key-bar">participants</div>
                         <div className="object-area">
                             {instance.participants.map(p => (
-                                <><div className="object-table-key">{p.id}</div><div className="object-table-value">{p.name}</div></>
+                                <React.Fragment key={p.id}><div className="object-table-key">{p.id}</div><div className="object-table-value">{p.name}</div></React.Fragment>
                             ))}
                         </div>
                     </div>
@@ -32,7 +37,7 @@ const PropertiesPanel = ({ instance }: PropertiesPanelProps) => {
                         <div className="key-bar">appointments</div>
                         <div className="object-area">
                             {instance.appointments.map(a => (
-                                <><div className="object-table-key">{a.id}</div><div className="object-table-value">{`${a.startAt} - ${a.startAt} (${a.status})`}</div></>
+                                <React.Fragment key={a.id}><div className="object-table-key">{a.id}</div><div className="object-table-value">{`${a.startAt} - ${a.startAt} (${a.status})`}</div></React.Fragment>
                             ))}
                         </div>
                     </div>
