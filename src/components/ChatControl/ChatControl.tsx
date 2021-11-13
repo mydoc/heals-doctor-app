@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import { Wrapper, Content, ControlBar, InputWrapper } from './ChatWindow.stytes';
+import { Wrapper, Content, ControlBar, InputWrapper } from './ChatControl.stytes';
 import SendIcon from '@mui/icons-material/Send';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
@@ -16,12 +16,12 @@ const AlwaysScrollToHere = () => {
     )
 }
 
-interface ChatWindowProps {
+interface ChatControlProps {
     episode: Episode | null;
     onSubmit: (msg: string) => void;
 }
 
-const ChatWindow = ({ episode, onSubmit }: ChatWindowProps) => {
+const ChatControl = ({ episode, onSubmit }: ChatControlProps) => {
 
     const [message, setMessage] = useState('');
 
@@ -68,4 +68,4 @@ const ChatWindow = ({ episode, onSubmit }: ChatWindowProps) => {
     )
 }
 
-export default ChatWindow;
+export default ChatControl;

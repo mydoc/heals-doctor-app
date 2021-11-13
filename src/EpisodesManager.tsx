@@ -98,7 +98,7 @@ const EpisodesManager = () => {
             </Splitter>
             <Splitter primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={30} percentage={true}>
                 <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
-                <CasePanel />
+                <CasePanel episode={activeEpisode} />
             </Splitter>
         </Splitter>
     )
