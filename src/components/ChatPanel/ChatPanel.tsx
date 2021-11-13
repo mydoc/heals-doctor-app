@@ -7,7 +7,7 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Episode } from '../../interfaces';
+import { Episode, User, UserRole } from '../../interfaces';
 
 interface ChatPanelProps {
     episode: Episode | null;
@@ -18,11 +18,15 @@ const ChatPanel = ({ episode, onSendMessage }: ChatPanelProps) => {
 
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
+    const getPatient = (): User | null => {
+        return episode?.participants.find(p => p.role === UserRole.patient) ?? null;
+    }
+
     return (
         <Wrapper>
             <MenuBar anchor={anchor}>
                 <ChatIcon />
-                <MenuLabel>Jake See</MenuLabel>
+                <MenuLabel>{getPatient()?.name ?? '<No Patient>'}</MenuLabel>
                 <MenuSeparator />
                 <MenuLabel>{ episode ? episode.provider.title : '' }</MenuLabel>
                 <div className="align-right"><IconButton id="expand-menu" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget) }><MenuIcon /></IconButton></div>

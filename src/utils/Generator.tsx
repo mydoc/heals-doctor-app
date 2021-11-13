@@ -1,4 +1,4 @@
-import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage } from "../interfaces";
+import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus } from "../interfaces";
 import { Database } from "../Database";
 
 const RANDOM = {
@@ -165,6 +165,7 @@ export default class Generator {
             "providerId": this.anyone(providers).id,
             "id": this.random(10000, 99999),
             "messages": this.randomChatHistory(participants),
+            "status": (this.random(1, 10) % 2 === 0) ? EpisodeStatus.Opened : EpisodeStatus.Closed
         }
 
         return episode;

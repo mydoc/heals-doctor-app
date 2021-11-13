@@ -47,12 +47,8 @@ const EpisodesManager = () => {
                         "userId": other[0].id
                     }, other[0]);
 
-                    console.log('Bot sending... end', newMessage);
-                    //setActiveEpisode((prev) => { return { ...prev!, messages: [...prev!.messages, newMessage] } });
                     addMessage(newMessage);
                 }
-
-
                 setTimeout(() => {
                     botSendChat();
                 }, Math.random() * 3000 + 500);
@@ -70,9 +66,6 @@ const EpisodesManager = () => {
                 "userId": session.id
             }, new User(session));
 
-            console.log('handleSendMessage', message);
-
-            // setActiveEpisode((prev) => { return { ...prev!, messages: [...prev!.messages, newMessage] } });
             addMessage(newMessage);
 
             setIsBotChat(true);
@@ -92,7 +85,7 @@ const EpisodesManager = () => {
                     <PropertiesPanel instance={activeEpisode} />
                     <div>
                         <MenuBar>
-                            <VideoCameraFrontIcon /><MenuLabel>David Copperfield</MenuLabel>
+                            <VideoCameraFrontIcon /><MenuLabel>{`${session?.firstName} ${session?.lastName}`}</MenuLabel>
                             <div className="align-right"><IconButton id="expand-menu-system" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
                         </MenuBar>
                         <Menu id="expand-menu-system" anchorEl={anchor} open={anchor?.id === "expand-menu-system"} onClose={() => setAnchor(null)}>

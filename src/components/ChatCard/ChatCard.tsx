@@ -27,7 +27,7 @@ const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
                 <Info>
                     <div className="container" onClick={ () => onClick(episode) }>
                         <div>{faces.map((p, i) => (<span key={i}>{ p.name }</span>))}</div>
-                        <div>{lastMsg && `${lastMsg.userId}: ${lastMsg.message}`}</div>
+                        <div>{lastMsg && `${lastMsg.user.firstName}: ${lastMsg.message}`}</div>
                     </div>
                 </Info>
                 <Menu>
