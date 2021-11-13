@@ -36,11 +36,26 @@ export const useEpisodes = (session: IUser | null) => {
     } else {
       setEpisodes([]);
     }
-  }, [session]);
+  }, [session, data]);
+
+  useEffect(() => {
+    if (activeEpisode) {
+      setEpisodes(prev => prev.map(e => e.id === activeEpisode.id ? activeEpisode : e));
+    }
+  }, [activeEpisode])
+
+
+  const addMessage = (message: ChatMessage) => {
+    setActiveEpisode((prev) => { return { ...prev!, messages: [...prev!.messages, message] } });
+  }
+
+  const selectActiveEpisode = (episode: Episode) => {
+    setActiveEpisode(episode);
+  }
 
   return {
     episodes, activeEpisode,
-    setEpisodes, setActiveEpisode
+    selectActiveEpisode, addMessage
   };
 }
 

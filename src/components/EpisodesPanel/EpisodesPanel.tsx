@@ -1,7 +1,7 @@
 import { Divider, IconButton, Menu, MenuItem } from "@mui/material";
 import MenuBar from "../MenuBar/MenuBar";
 import MenuLabel from "../MenuLabel/MenuLabel";
-import { Content, Wrapper } from "./ChatManager.styles";
+import { Content, Wrapper } from "./EpisodesPanel.styles";
 import { useContext, useState } from "react";
 
 // icons
@@ -12,13 +12,13 @@ import ChatCard from "../ChatCard/ChatCard";
 import { Episode } from "../../interfaces";
 
 
-interface ChatManagerProp {
+interface EpisodesPanelProp {
     episodes: Episode[];
     activeEpisode: Episode | null;
     onActivateChatCard: (e: Episode) => void;
 }
 
-const ChatManager = ({ episodes, onActivateChatCard, activeEpisode }: ChatManagerProp) => {
+const EpisodesPanel = ({ episodes, onActivateChatCard, activeEpisode }: EpisodesPanelProp) => {
 
     const { session } = useContext(DataContext);
 
@@ -28,7 +28,7 @@ const ChatManager = ({ episodes, onActivateChatCard, activeEpisode }: ChatManage
         <Wrapper>
             <MenuBar>
                 <ChatIcon />
-                <MenuLabel>Chats</MenuLabel>
+                <MenuLabel>Episodes</MenuLabel>
                 <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget) }><MenuIcon /></IconButton></div>
             </MenuBar>
             <Menu id="expand-menu-chat" anchorEl={anchor} open={anchor?.id === "expand-menu-chat"} onClose={() => setAnchor(null)}>
@@ -46,4 +46,4 @@ const ChatManager = ({ episodes, onActivateChatCard, activeEpisode }: ChatManage
     )
 }
 
-export default ChatManager;
+export default EpisodesPanel;

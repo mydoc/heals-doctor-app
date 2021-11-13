@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wrapper } from './PatientManager.styles'
+import { Wrapper } from './ChatPanel.styles'
 import MenuBar from '../MenuBar/MenuBar';
 import ChatIcon from '@mui/icons-material/Chat';
 import MenuLabel from '../MenuLabel/MenuLabel';
@@ -9,12 +9,12 @@ import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Episode } from '../../interfaces';
 
-interface PatientManagerProps {
+interface ChatPanelProps {
     episode: Episode | null;
     onSendMessage: (e: string) => void;
 }
 
-const PatientManager = ({ episode, onSendMessage }: PatientManagerProps) => {
+const ChatPanel = ({ episode, onSendMessage }: ChatPanelProps) => {
 
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
@@ -38,4 +38,4 @@ const PatientManager = ({ episode, onSendMessage }: PatientManagerProps) => {
     )
 }
 
-export default PatientManager;
+export default ChatPanel;

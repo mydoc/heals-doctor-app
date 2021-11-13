@@ -31,8 +31,10 @@ const ChatWindow = ({ episode, onSubmit }: ChatWindowProps) => {
 
     const handleMessageSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        onSubmit(message);
-        setMessage('');
+        if (message !== '') {
+            onSubmit(message);
+            setMessage('');
+        }
     }
 
     return (

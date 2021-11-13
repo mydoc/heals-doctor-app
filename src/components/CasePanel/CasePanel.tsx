@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import MenuBar from '../MenuBar/MenuBar';
 import MenuButton from '../MenuButton/MenuButton';
-import { Content, Wrapper } from './EpisodeManager.styles'
+import { Content, Wrapper } from './CasePanel.styles'
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
@@ -9,7 +9,7 @@ import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import MenuIcon from '@mui/icons-material/Menu';
 
 
-const EpisodeManager = () => {
+const CasePanel = () => {
 
     const [anchor, setAnchor] = useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,4 +76,4 @@ const EpisodeManager = () => {
     );
 }
 
-export default EpisodeManager;
+export default CasePanel;
