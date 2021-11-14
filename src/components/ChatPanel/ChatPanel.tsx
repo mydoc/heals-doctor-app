@@ -23,7 +23,6 @@ const ChatPanel = ({ episode, onSendMessage }: ChatPanelProps) => {
 
     return (
         <Panel
-            anchor={anchor}
             control={<ChatControl episode={episode} onSubmit={ (message) => onSendMessage(message) } />}
         >
             <ChatIcon />
@@ -36,6 +35,8 @@ const ChatPanel = ({ episode, onSendMessage }: ChatPanelProps) => {
                 <Divider />
                 <MenuItem onClick={() => { }}>Group Referral</MenuItem>
                 <MenuItem onClick={() => { }}>Direct Referral</MenuItem>
+                <Divider />
+                <MenuItem onClick={() => { }}>Leave Chat</MenuItem>
             </Menu>
         </Panel>
     )
