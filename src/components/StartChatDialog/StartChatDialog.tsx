@@ -1,4 +1,4 @@
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, ListItem, TextField } from "@mui/material";
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import { useState } from "react";
 import { IUser } from "../../interfaces";
 import { ParticipantList, SelectedList } from "./StartChatDialog.styles";
