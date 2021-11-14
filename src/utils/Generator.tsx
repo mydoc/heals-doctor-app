@@ -75,7 +75,7 @@ export default class Generator {
         const providers = Database.providers;
 
         const countPatients = this.random(5, 8);
-        const countDoctors = this.random(1, 2);
+        const countDoctors = this.random(5, 10);
         const countEpisodes = this.random(20, 50);
         const countAppointments = this.random(20, 50);
 
