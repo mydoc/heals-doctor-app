@@ -12,6 +12,7 @@ import Panel from "../Panel/Panel";
 import ChatListControl from "../ChatListControl/ChatListControl";
 
 import { Database } from '../../Database';
+import StartChatDialog from "../StartChatDialog/StartChatDialog";
 
 
 interface EpisodesPanelProp {
@@ -55,34 +56,10 @@ const EpisodesPanel = ({ episodes, onActivateChatCard, activeEpisode }: Episodes
                 <Divider />
                 <MenuItem onClick={() => { }}>Search Episodes</MenuItem>
             </Menu>
-            <Dialog open={showNewChatDialog} onClose={() => setShowNewChatDialog(false)}
-                fullWidth
-                maxWidth='sm'
-                scroll="paper"
-            >
-                <DialogTitle>Start Chat Episode</DialogTitle>
-                <DialogContent>
-                    {/* <DialogContentText>
-                        Select chat participants
-                    </DialogContentText> */}
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Doctor or Concierge"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                    />
-                    {Database.users.filter(u => u.role === UserRole.doctor).map(u => (
-                        <div key={u.id}>{`${u.firstName} ${u.lastName} <${u.email}>, (${u.id})` }</div>
-                    ))}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setShowNewChatDialog(false)}>Cancel</Button>
-                    <Button onClick={() => setShowNewChatDialog(false)}>Create</Button>
-                </DialogActions>
-            </Dialog>
+            <StartChatDialog
+                open={showNewChatDialog}
+                onClose={() => setShowNewChatDialog(false)}
+                participants={Database.users.filter(u => u.role === UserRole.doctor)} />
         </Panel>
     )
 }
