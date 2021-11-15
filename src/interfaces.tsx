@@ -238,12 +238,22 @@ export enum EpisodeStatus {
   Closed = 'Closed'
 }
 
+export enum EpisodeType {
+  BotConvo = 1, // - Bot to Patient(default episode for each patient)
+  CallCentre = 2, // - Concierge to Patient
+  Diary = 3, // Patient to Professional
+  Group = 4, // concierge to Professional
+  HealthScreening = 5, // - Healthscreening episode to Patient
+  PeerToPeer = 6, // - Professional to Professional
+}
+
 export interface IEpisode {
   id: number;
   participants: IUser[];
   providerId: number;
   messages: IChatMessage[];
-  status: EpisodeStatus
+  status: EpisodeStatus,
+  type: EpisodeType
 }
 
 export interface IAppointment {
@@ -259,6 +269,7 @@ export class Episode implements IEpisode {
   id: number;
   providerId: number;
   status: EpisodeStatus;
+  type: EpisodeType;
 
   constructor(episode: IEpisode,
     public appointments: IAppointment[],
@@ -269,6 +280,7 @@ export class Episode implements IEpisode {
     this.id = episode.id;;
     this.providerId = episode.providerId;
     this.status = episode.status;
+    this.type = episode.type;
   }
 
 

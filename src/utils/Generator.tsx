@@ -1,4 +1,4 @@
-import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus } from "../interfaces";
+import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus, EpisodeType } from "../interfaces";
 import { Database } from "../Database";
 
 const RANDOM = {
@@ -76,7 +76,7 @@ export default class Generator {
 
         const countPatients = this.random(5, 8);
         const countDoctors = this.random(5, 10);
-        const countEpisodes = this.random(20, 50);
+        const countEpisodes = this.random(30, 60);
         const countAppointments = this.random(20, 50);
 
         const patients = [], doctors = [], appointments = [], episodes = [];
@@ -165,7 +165,8 @@ export default class Generator {
             "providerId": this.anyone(providers).id,
             "id": this.random(10000, 99999),
             "messages": this.randomChatHistory(participants),
-            "status": (this.random(1, 10) % 2 === 0) ? EpisodeStatus.Opened : EpisodeStatus.Closed
+            "status": (this.random(1, 10) % 2 === 0) ? EpisodeStatus.Opened : EpisodeStatus.Closed,
+            "type": this.random(1, 6) as EpisodeType
         }
 
         return episode;
