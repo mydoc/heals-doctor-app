@@ -12,7 +12,7 @@ import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import { DataContext } from './contexts/DataContext';
 import useEpisodes from './hooks/useEpisodes';
 
-import { ChatMessage, Episode, User } from './interfaces';
+import { ChatMessage, ChatMessageType, Episode, User } from './interfaces';
 import Generator from './utils/Generator';
 import PropertiesPanel from './components/PropertiesPanel/PropertiesPanel';
 
@@ -42,7 +42,8 @@ const EpisodesManager = () => {
                     const newMessage = new ChatMessage({
                         "datetime": new Date(),
                         "message": Generator.getSentence(),
-                        "userId": other[0].id
+                        "userId": other[0].id,
+                        "type": ChatMessageType.Message
                     }, other[0]);
 
                     addMessage(newMessage);
@@ -61,7 +62,8 @@ const EpisodesManager = () => {
             const newMessage = new ChatMessage({
                 "datetime": new Date(),
                 "message": message,
-                "userId": session.id
+                "userId": session.id,
+                "type": ChatMessageType.Message
             }, new User(session));
 
             addMessage(newMessage);

@@ -1,4 +1,4 @@
-import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus, EpisodeType } from "../interfaces";
+import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus, EpisodeType, ChatMessageType } from "../interfaces";
 import { Database } from "../Database";
 
 const RANDOM = {
@@ -61,6 +61,9 @@ const RANDOM = {
         `She folded her handkerchief neatly.`,
         `It was her first experience training a rainbow unicorn.`
     ],
+    countries: ["Afghanistan", "Åland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, The Democratic Republic of The", "Cook Islands", "Costa Rica", "Cote D'ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-bissau", "Guyana", "Haiti", "Heard Island and Mcdonald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran, Islamic Republic of", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macao", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestinian Territory, Occupied", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon", "Saint Vincent and The Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and The South Sandwich Islands", "Spain", "Sri Lanka", "Sudan", "Suriname", "Svalbard and Jan Mayen", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Timor-leste", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Viet Nam", "Virgin Islands, British", "Virgin Islands, U.S.", "Wallis and Futuna", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"],
+    places: ["Locust Grove", "Wallhausen", "Tsaratanana", "Acuitzio del", "Rivergaro", "Anse", "Jeffreyston", "Hemlock	MI", "Wiyayu Barat", "Lagata", "Shanli", "San Nicolas", "Koani Ndogo", "Moss Bluff", "Erkerode", "Tres Rios", "Hillsboro", "Zaranj", "Ciurila", "Parika", "Clehull", "Nies", "Broughblegreen", "Lakessmerebourne", "Sweke Wells", "East Westlick", "West Ters", "Grand Marshtur", "Rusgu", "Chenhailbury", "Gas View", "Digby Market", "Reservoir Banks", "Banks Lanes", "Beaulieu Passage", "Tiverton Spinney", "Stewart Warren", "Russell Crest", "Nene Crescent", "Bluebell Yard", "Glamis Covert", "Brynamman Road", "Primrose Paddocks", "Ely Ridge", "Thirlmere Elms", "Cleeve Retreat", "Edgar Laurels", "Winchester Esplanade", "Nairn Haven", "Old Mill Park", "Duncan Cliff", "St David's Gardens", "Admiral Meadow", "Willerby Carr Lane", "St Medan's Place", "Goodwood Grange", "Plough Acres", "Powell Meadow", "Balfour Downs", "Foster Ridings", "Hornbeam Maltings", "Deans Boulevard", "Primrose Brook", "County Coppice", "Wellington Walk", "Sun Glade", "Wallace Leaze", "Albert Furlong", "Old Station Ridgeway", "Abbotts Way", "Stuart Oval", "Plough North", "Muirfield Glade", "Holt Coppice", "Newtown Drove", "Lion Garden", "Horsemoor Square", "Glencoe Highway", "Ocean Gait", "Ely By-Pass", "The Merrin", "Linnet End", "St Alban's By-Pass", "Adam Point", "St Catherine's Heights", "Allington Head", "Windermere Grove", "Shelley Pastures", "Johnston Banks", "Brickfield Crest", "Dillam Close", "Water Courtyard", "Hurdwick", "St Clair Place", "Sheffield Green", "Buchanan Brae", "Trevor Hollow", "Springfield North", "Knighton Heath Close", "City Circle", "Burlington Brow", "Watson Dene", "Horton Buildings", "Mercer Holt", "Goodwood Brow", "Moorside Point", "Convent Down", "Parkfield Courtyard", "Brown Las", "Grassington Place", "Medmerry Hill", "Sixth Path", "Forbes Laurels", "Backhold Road", "Pryor Way", "Clayton Isaf", "North Farm Court", "Sovereign Gardens", "Oak Brae", "Wilton Royd", "Kipling Oval", "Paget Isaf", "Stonehill Place", "Stirling Corner", "York Brook", "Westland Way", "Staynall Lane", "Twyn Road", "Harper Common", "Pippin Avenue"],
+    cities: ["Tokyo", "Delhi", "Shanghai", "São Paulo", "Mexico City", "Cairo", "Mumbai", "Beijing", "Dhaka", "Osaka", "New York", "Karachi", "Buenos Aires", "Chongqing", "Istanbul", "Kolkata", "Manila", "Rio de Janeiro", "Tianjin", "Kinshasa", "Guangzhou", "Los Angeles", "Moscow", "Shenzhen", "Lahore", "Bangalore", "Paris", "Bogotá", "Jakarta", "Chennai", "Lima", "Bangkok", "Nagoya", "Hyderabad", "London", "Tehran", "Chicago", "Chengdu", "Nanjing", "Wuhan", "Ho Chi Minh City", "Luanda", "Ahmedabad", "Kuala Lumpur", "Xi'an", "Hong Kong", "Dongguan", "Hangzhou", "Foshan", "Shenyang", "Riyadh", "Baghdad", "Santiago", "Surat", "Madrid", "Suzhou", "Pune", "Harbin", "Houston", "Dallas", "Toronto", "Dar es Salaam", "Miami", "Belo Horizonte", "Singapore", "Philadelphia", "Atlanta", "Fukuoka", "Khartoum", "Barcelona", "Saint Petersburg", "Qingdao", "Dalian", "Washington, D.C.", "Yangon", "Alexandria", "Jinan", "Guadalajara"]
 }
 
 
@@ -123,8 +126,8 @@ export default class Generator {
         return database;
     }
 
-    public static random(min:number, max:number):number { // min and max included
-        return Math.floor(Math.random() * (max - min + 1) + min)
+    public static random(min:number, max:number):number { // min and max inclusive
+        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     public static anyone<T>(items: T[]):T {
@@ -139,18 +142,27 @@ export default class Generator {
         let gender = this.anyone(RANDOM.gender);
 
         let user: IUser = {
-        "id": this.random(10000, 99999),
-        "birthdate": this.randomDate(),
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": `${firstName}.${firstName}@${domain}`,
-        "contact": this.random(80000000, 99999999).toString(),
-        "gender": gender,
-        "nationalId": this.random(10000000, 99999999).toString(),
-        "password": this.anyone(RANDOM.adjectives),
-        "username": this.anyone(RANDOM.nouns),
-        "imgUrl": this.randomPortraitUrl(gender === 'Male'),
-        "role": UserRole.patient
+            "id": this.random(10000, 99999),
+            "birthdate": this.randomDate(),
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": `${firstName}.${firstName}@${domain}`,
+            "contact": this.random(80000000, 99999999).toString(),
+            "gender": gender,
+            "nationalId": this.random(10000000, 99999999).toString(),
+            "password": this.anyone(RANDOM.adjectives),
+            "username": this.anyone(RANDOM.nouns),
+            "imgUrl": this.randomPortraitUrl(gender === 'Male'),
+            "country": this.anyone(RANDOM.countries),
+            "city": this.anyone(RANDOM.cities),
+            "street": `${this.random(10, 999)} ${this.anyone(RANDOM.places)}`,
+            "postal": String(this.random(100000, 999999)),
+            "allergy": this.anyone(RANDOM.sentences),
+            "conditions": this.anyone(RANDOM.sentences),
+            "medications": Array(5).fill(0).map(i => this.anyone(RANDOM.nouns)).join(', '),
+            "emergencyContact": String(this.random(10000000, 99999999)),
+            "emergencyPerson": this.anyone(RANDOM.firstNames) + ' ' + this.anyone(RANDOM.lastNames),
+            "role": UserRole.patient
         };
 
         return user;
@@ -186,7 +198,8 @@ export default class Generator {
             const message: IChatMessage = {
                 "userId": this.anyone(participants).id,
                 "message": Generator.getSentence(),
-                "datetime": nextDateTime
+                "datetime": nextDateTime,
+                "type": ChatMessageType.Message
             }
             nextDateTime = new Date(nextDateTime.getTime() + this.random(sec10, min15));
             messsages.push(message);

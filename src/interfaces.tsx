@@ -183,6 +183,16 @@ export interface IUser {
   email?: string;
   imgUrl?: string;
   nationalId?: string;
+  country?: string,
+  city?: string,
+  street?: string,
+  postal?: string,
+  allergy?: string,
+  conditions?: string,
+  medications?: string,
+  emergencyContact?: string,
+  emergencyPerson?: string,
+
   role: UserRole
 }
 
@@ -194,6 +204,7 @@ export enum UserRole {
 }
 
 export class User implements IUser {
+
   id: number;
   username: string;
   password: string;
@@ -201,11 +212,20 @@ export class User implements IUser {
   lastName: string;
   gender: string;
   birthdate: Date;
-  contact?: string;
-  email?: string;
-  imgUrl?: string;
-  nationalId?: string;
+  contact?: string | undefined;
+  email?: string | undefined;
+  imgUrl?: string | undefined;
+  nationalId?: string | undefined;
+  country?: string | undefined;
+  city?: string | undefined;
+  street?: string | undefined;
+  postal?: string | undefined;
   role: UserRole;
+  allergy?: string;
+  conditions?: string;
+  medications?: string;
+  emergencyContact?: string;
+  emergencyPerson?: string;
 
   constructor(template: IUser) {
     this.id = template.id;
@@ -220,17 +240,36 @@ export class User implements IUser {
     this.imgUrl = template.imgUrl;
     this.nationalId = template.nationalId;
     this.role = template.role;
+    this.country = template.country;
+    this.city = template.city;
+    this.street = template.street;
+    this.postal = template.postal;
+    this.allergy = template.allergy;
+    this.conditions = template.conditions;
+    this.medications = template.medications;
+    this.emergencyContact = template.emergencyContact;
+    this.emergencyPerson = template.emergencyPerson;
   }
+
 
   get name(): string {
       return this.firstName + " " + this.lastName;
   }
 }
 
+export enum ChatMessageType {
+  Appointment = 1,
+  JSON = 2,
+  Laboratory = 3,
+  Message = 4,
+  Referral = 5
+}
+
 export interface IChatMessage {
   userId: number;
   message: string;
   datetime: Date;
+  type: ChatMessageType;
 }
 
 export enum EpisodeStatus {
@@ -261,7 +300,7 @@ export interface IAppointment {
   episodeId: number;
   startAt: Date;
   endAt: Date;
-  status: AppointmentStatus
+  status: AppointmentStatus,
 }
 
 export class Episode implements IEpisode {
@@ -290,11 +329,13 @@ export class ChatMessage implements IChatMessage {
   userId: number;
   message: string;
   datetime: Date;
+  type: ChatMessageType;
 
   constructor(template: IChatMessage, public user: User) {
     this.userId = template.userId;
     this.message = template.message;
     this.datetime = template.datetime;
+    this.type = template.type;
   }
 
 }
