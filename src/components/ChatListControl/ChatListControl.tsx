@@ -1,6 +1,6 @@
 import { Episode, IUser } from "../../interfaces";
 import ChatCard from "../ChatCard/ChatCard";
-import { Wrapper } from "./ChatListControl.styles";
+import { Wrapper, WrapperEmpty } from "./ChatListControl.styles";
 
 
 interface ChatListControlProps  {
@@ -11,7 +11,7 @@ interface ChatListControlProps  {
 }
 
 const ChatListControl = ({episodes, activeEpisode, session, onSelect}: ChatListControlProps) => {
-    if(episodes) return (
+    if (episodes && episodes.length > 0) return (
         <Wrapper>
         {episodes?.map((episode) => (
             <ChatCard key={episode.id} isActive={episode.id === activeEpisode?.id } episode={episode} session={session!} onClick={ (e) => onSelect(e) }/>
@@ -19,7 +19,7 @@ const ChatListControl = ({episodes, activeEpisode, session, onSelect}: ChatListC
         </Wrapper>
     )
 
-    return <>No Episodes</>
+    return <WrapperEmpty>No Episodes</WrapperEmpty>
 }
 
 export default ChatListControl;

@@ -6,8 +6,9 @@ import { useContext, useState } from "react";
 import ChatIcon from '@mui/icons-material/Chat';
 import MenuIcon from '@mui/icons-material/Menu';
 import { DataContext } from '../../contexts/DataContext';
-import { Episode, EpisodeStatus, UserRole } from "../../interfaces";
+import { Episode, EpisodeStatus, EpisodeType, UserRole } from "../../interfaces";
 import { Check } from "@mui/icons-material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Panel from "../Panel/Panel";
 import ChatListControl from "../ChatListControl/ChatListControl";
 
@@ -26,15 +27,29 @@ const EpisodesPanel = ({ episodes, onActivateChatCard, activeEpisode }: Episodes
     const { session } = useContext(DataContext);
 
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
-    const [filter, setFilter] = useState<'All' | 'Opened' | 'Closed'>('All');
+    const [statusFilter, setStatusFilter] = useState<'All' | 'Opened' | 'Closed'>('Opened');
+    const [typeFilter, setTypeFilter] = useState<EpisodeType[]>([
+        EpisodeType.PeerToPeer,
+        EpisodeType.Group,
+        EpisodeType.Diary,
+        EpisodeType.HealthScreening
+    ]);
     const [showNewChatDialog, setShowNewChatDialog] = useState(false);
 
     const isMenuOpened = Boolean(anchor);
+    const showType = (type: EpisodeType) => typeFilter.includes(type);
 
     const getFilteredEpisodes = (): Episode[] => {
-        if (filter === 'Closed') return episodes.filter(e => e.status === EpisodeStatus.Closed);
-        else if (filter === 'Opened') return episodes.filter(e => e.status === EpisodeStatus.Opened);
-        else return episodes;
+        if (statusFilter === 'Closed') return episodes.filter(e => (e.status === EpisodeStatus.Closed) && typeFilter.includes(e.type));
+        else if (statusFilter === 'Opened') return episodes.filter(e => (e.status === EpisodeStatus.Opened) && typeFilter.includes(e.type));
+        else return episodes.filter(e => typeFilter.includes(e.type));
+    }
+
+    const toogleTypeFilter = (type: EpisodeType) => {
+        setTypeFilter(prev => {
+            if (prev.includes(type)) return prev.filter(t => t !== type);
+            else return [...prev, type];
+        });
     }
 
     const onNewChatEpisode = () => {
@@ -45,12 +60,19 @@ const EpisodesPanel = ({ episodes, onActivateChatCard, activeEpisode }: Episodes
     return (
         <Panel control={<ChatListControl episodes={getFilteredEpisodes()} session={session} activeEpisode={activeEpisode} onSelect={onActivateChatCard}/>}>
             <ChatIcon />
-            <MenuLabel>{`${filter} Episodes (${getFilteredEpisodes().length})`}</MenuLabel>
+            <MenuLabel>{`${statusFilter} Episodes (${getFilteredEpisodes().length})`}</MenuLabel>
             <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget) }><MenuIcon /></IconButton></div>
             <Menu anchorEl={anchor} open={isMenuOpened} onClose={() => setAnchor(null)}>
-                <MenuItem onClick={() => setFilter('All')}>{filter === 'All' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={filter !== 'All'}>All</ListItemText></MenuItem>
-                <MenuItem onClick={() => setFilter('Opened')}>{filter === 'Opened' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={filter !== 'Opened'}>Opened</ListItemText></MenuItem>
-                <MenuItem onClick={() => setFilter('Closed')}>{filter === 'Closed' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={filter !== 'Closed'}>Closed</ListItemText></MenuItem>
+                <MenuItem onClick={() => setStatusFilter('All')}>{statusFilter === 'All' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={statusFilter !== 'All'}>All</ListItemText></MenuItem>
+                <MenuItem onClick={() => setStatusFilter('Opened')}>{statusFilter === 'Opened' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={statusFilter !== 'Opened'}>Opened</ListItemText></MenuItem>
+                <MenuItem onClick={() => setStatusFilter('Closed')}>{statusFilter === 'Closed' ? <ListItemIcon><Check /></ListItemIcon> : ''}<ListItemText inset={statusFilter !== 'Closed'}>Closed</ListItemText></MenuItem>
+                <Divider />
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.BotConvo)}>{showType(EpisodeType.BotConvo) ? <ListItemIcon><CheckCircleIcon style={{ color: "red" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.BotConvo)}>Bot Conversation</ListItemText></MenuItem>
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.CallCentre)}>{showType(EpisodeType.CallCentre) ? <ListItemIcon><CheckCircleIcon style={{ color: "orange" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.CallCentre)}>Call Centre</ListItemText></MenuItem>
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.Diary)}>{showType(EpisodeType.Diary) ? <ListItemIcon><CheckCircleIcon style={{ color: "yellow" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.Diary)}>Diary</ListItemText></MenuItem>
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.Group)}>{showType(EpisodeType.Group) ? <ListItemIcon><CheckCircleIcon style={{ color: "green" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.Group)}>Group</ListItemText></MenuItem>
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.HealthScreening)}>{showType(EpisodeType.HealthScreening) ? <ListItemIcon><CheckCircleIcon style={{ color: "blue" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.HealthScreening)}>Health Screening</ListItemText></MenuItem>
+                <MenuItem onClick={() => toogleTypeFilter(EpisodeType.PeerToPeer)}>{showType(EpisodeType.PeerToPeer) ? <ListItemIcon><CheckCircleIcon style={{ color: "indigo" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(EpisodeType.PeerToPeer)}>Peer to Peer</ListItemText></MenuItem>
                 <Divider />
                 <MenuItem onClick={onNewChatEpisode}>Start Chat Episode...</MenuItem>
                 <Divider />

@@ -31,8 +31,6 @@ const EpisodesManager = () => {
 
     useEffect(() => {
 
-        console.log('isBotChat', isBotChat, 'activeEpisode', !!activeEpisode)
-
         if (isBotChat) {
             setIsBotChat(false);
 

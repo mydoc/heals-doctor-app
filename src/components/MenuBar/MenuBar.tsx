@@ -1,16 +1,17 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Content, Slider, Wrapper } from "./MenuBar.styles";
 
 
 interface MenuBarProps {
     children?: ReactElement | ReactElement[];
     anchor?: HTMLElement | null;
+    style?: React.CSSProperties
 }
 
-const MenuBar = ({ children = undefined, anchor = undefined } : MenuBarProps) => {
+const MenuBar = ({ children = undefined, anchor = undefined, style } : MenuBarProps) => {
 
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <Content>
                 { children }
             </Content>

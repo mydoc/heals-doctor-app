@@ -1,9 +1,20 @@
 import styled from 'styled-components';
+import { EpisodeType } from '../../interfaces';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ type: EpisodeType }>`
     width: 100%;
     padding: 10px 10px 10px 0;
     border-bottom: 1px solid #ccc;
+    border-left: 8px solid ${(props) => {
+        switch (props.type) {
+            case EpisodeType.BotConvo: return 'red';
+            case EpisodeType.CallCentre: return 'orange';
+            case EpisodeType.Diary: return 'yellow';
+            case EpisodeType.Group: return 'green';
+            case EpisodeType.HealthScreening: return 'blue';
+            case EpisodeType.PeerToPeer: return 'indigo';
+        }
+    }};
     overflow: hidden;
 `;
 

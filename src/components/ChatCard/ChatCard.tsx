@@ -19,7 +19,7 @@ const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
     const lastMsg = messages ? messages[messages.length - 1] : null;
 
     return (
-        <Wrapper>
+        <Wrapper type={episode.type}>
             <Content className={isActive ? 'isActive' : ''}>
                 <FaceImages>
                     <img src={faces[0].imgUrl} alt={ faces[0].name }/>
