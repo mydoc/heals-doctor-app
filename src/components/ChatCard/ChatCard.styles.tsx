@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { EpisodeType } from '../../interfaces';
+import { EpisodeType } from '../../interfaces/episode';
 
 export const Wrapper = styled.div<{ type: EpisodeType }>`
     width: 100%;

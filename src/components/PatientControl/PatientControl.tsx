@@ -1,5 +1,5 @@
 import React from "react";
-import { User, UserRole } from "../../interfaces";
+import { User, UserRole } from "../../interfaces/user";
 import { Wrapper } from "./PatientControl.styles";
 
 interface PatientControlProps {

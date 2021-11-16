@@ -1,6 +1,7 @@
-import { User, Episode, ChatMessage, IUser } from '../interfaces';
 import { DataContext, IDataContext } from '../contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
+import { IUser, User } from '../interfaces/user';
+import { Message, Episode } from '../interfaces/episode';
 
 export const useEpisodes = (session: IUser | null) => {
   const { data } = useContext<IDataContext>(DataContext);
@@ -19,7 +20,7 @@ export const useEpisodes = (session: IUser | null) => {
           const participants = episode.participants.map((participant) => new User(participant));
           const provider = data.providers.find((provider) => provider.id === episode.providerId)!;
           const appointments = data.appointments.filter((appt) => episode.id === appt.episodeId) ?? [];
-          const messages = episode.messages.map((m) => new ChatMessage(m, participants.find(p => p.id === m.userId)!));
+          const messages = episode.messages.map((m) => new Message(m, participants.find(p => p.id === m.userId)!));
           episode.participants = participants;
           return new Episode(episode, appointments, provider, messages, participants);
         });
@@ -45,7 +46,7 @@ export const useEpisodes = (session: IUser | null) => {
   }, [activeEpisode])
 
 
-  const addMessage = (message: ChatMessage) => {
+  const addMessage = (message: Message) => {
     setActiveEpisode((prev) => { return { ...prev!, messages: [...prev!.messages, message] } });
   }
 

@@ -1,4 +1,4 @@
-import { Episode } from "../../interfaces";
+import { Episode } from "../../interfaces/episode";
 import InfoIcon from '@mui/icons-material/Info';
 import MenuLabel from "../MenuLabel/MenuLabel";
 import Panel from "../Panel/Panel";

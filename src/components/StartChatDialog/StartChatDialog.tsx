@@ -1,6 +1,6 @@
 import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import { useState } from "react";
-import { IUser } from "../../interfaces";
+import { IUser } from "../../interfaces/user";
 import { ParticipantList, SelectedList } from "./StartChatDialog.styles";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 

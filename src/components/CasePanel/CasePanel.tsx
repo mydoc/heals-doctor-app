@@ -7,7 +7,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Panel from '../Panel/Panel';
 import CaseNoteControl from '../CaseNoteControl/CaseNoteControl';
 import PropertiesControl from '../PropertiesControl/PropertiesControl';
-import { Episode, EpisodeType, UserRole } from '../../interfaces';
+import { UserRole } from '../../interfaces/user';
+import { Episode, EpisodeType } from '../../interfaces/episode';
 import PatientControl from '../PatientControl/PatientControl';
 
 interface CasePanelProps {

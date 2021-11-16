@@ -12,9 +12,10 @@ import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import { DataContext } from './contexts/DataContext';
 import useEpisodes from './hooks/useEpisodes';
 
-import { ChatMessage, ChatMessageType, Episode, User } from './interfaces';
 import Generator from './utils/Generator';
 import PropertiesPanel from './components/PropertiesPanel/PropertiesPanel';
+import { Episode, Message, MessageType  } from './interfaces/episode';
+import { User } from './interfaces/user';
 
 const EpisodesManager = () => {
 
@@ -39,11 +40,11 @@ const EpisodesManager = () => {
                 const botSendChat = () => {
                     console.log('Bot sending...');
                     const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
-                    const newMessage = new ChatMessage({
+                    const newMessage = new Message({
                         "datetime": new Date(),
                         "message": Generator.getSentence(),
                         "userId": other[0].id,
-                        "type": ChatMessageType.Message
+                        "type": MessageType.Message
                     }, other[0]);
 
                     addMessage(newMessage);
@@ -59,11 +60,11 @@ const EpisodesManager = () => {
 
     const handleSendMessage = (message: string) => {
         if (session && activeEpisode) {
-            const newMessage = new ChatMessage({
+            const newMessage = new Message({
                 "datetime": new Date(),
                 "message": message,
                 "userId": session.id,
-                "type": ChatMessageType.Message
+                "type": MessageType.Message
             }, new User(session));
 
             addMessage(newMessage);

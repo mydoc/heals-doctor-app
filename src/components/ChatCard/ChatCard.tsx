@@ -1,7 +1,8 @@
 import { IconButton } from '@mui/material';
 import { Wrapper, FaceImages, Menu, Content, Info } from './ChatCard.styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { IUser, Episode } from '../../interfaces';
+import { Episode } from '../../interfaces/episode';
+import { IUser } from '../../interfaces/user';
 
 
 interface ChatCardProps {

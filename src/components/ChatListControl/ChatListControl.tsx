@@ -1,4 +1,5 @@
-import { Episode, IUser } from "../../interfaces";
+import { Episode } from "../../interfaces/episode";
+import { IUser } from "../../interfaces/user";
 import ChatCard from "../ChatCard/ChatCard";
 import { Wrapper, WrapperEmpty } from "./ChatListControl.styles";
 

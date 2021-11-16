@@ -1,4 +1,4 @@
-import { IDatabase } from "./interfaces";
+import { IDatabase } from "./interfaces/data";
 
 export const Database: IDatabase = {
      // will be populated randomly on init
