@@ -10,9 +10,10 @@ interface ChatCardProps {
     session: IUser;
     onClick: (e: Episode) => void;
     isActive?: boolean;
+    onMore: (e: Episode) => void;
 }
 
-const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
+const ChatCard = ({ episode, session, onClick, isActive, onMore }: ChatCardProps) => {
 
     const { participants, messages } = episode;
 
@@ -32,7 +33,7 @@ const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
                     </div>
                 </Info>
                 <Menu>
-                    <IconButton><MoreVertIcon /></IconButton>
+                    <IconButton onClick={() => onMore(episode)}><MoreVertIcon /></IconButton>
                 </Menu>
             </Content>
         </Wrapper>

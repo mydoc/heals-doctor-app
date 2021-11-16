@@ -5,9 +5,8 @@ import MedicalCertificateControl from "../MedicalCertificateControl/MedicalCerti
 import MenuBar from "../MenuBar/MenuBar";
 import MenuButton from "../MenuButton/MenuButton";
 import MenuLabel from "../MenuLabel/MenuLabel";
-import { Content, SlideOut, SlideOutWrapper, Wrapper } from "./CaseNoteControl.styles";
-import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from "@mui/material";
+import SlideOut from "../SlideOut/SlideOut";
+import { Content, Wrapper } from "./CaseNoteControl.styles";
 
 interface CaseNoteControlProps {
     patient: User,
@@ -61,15 +60,9 @@ const CaseNoteControl = ({ patient, doctor, onSubmitMedicalCertificate }: CaseNo
                     </div>
                 </form>
             </Content>
-
-            <SlideOutWrapper open={isSlideOut}>
-                <SlideOut open={isSlideOut}>
-                    <div className="header"><IconButton className="align-right" onClick={(e) => setIsSlideOut(prev => !prev)}><CloseIcon /></IconButton></div>
-                    <div className="content">
-                        <MedicalCertificateControl patient={patient!} doctor={doctor!} onSubmit={() => { }} />
-                    </div>
-                </SlideOut>
-            </SlideOutWrapper>
+            <SlideOut title='Medical Certificate' open={isSlideOut} onClose={() => setIsSlideOut(prev => !prev)}>
+                <MedicalCertificateControl patient={patient!} doctor={doctor!} onSubmit={() => { }} />
+            </SlideOut>
         </Wrapper>
     );
 }
