@@ -43,6 +43,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     }
 
     const patient = episode?.participants.find(p => p.role === UserRole.patient) ?? null;
+    const doctor = episode?.participants.find(p => p.role === UserRole.doctor) ?? null;
 
     const selectControl = () => {
         switch(what) {
@@ -51,7 +52,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
             case What.Patient:
                 return <PatientControl patient={patient} />
             default:
-                return <CaseNoteControl />
+                return <CaseNoteControl patient={patient!} doctor={doctor!} onSubmitMedicalCertificate={() => {}} />
         }
     }
 

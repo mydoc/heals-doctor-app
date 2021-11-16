@@ -65,8 +65,6 @@ export class Episode implements IEpisode {
         this.status = episode.status;
         this.type = episode.type;
     }
-
-
 }
 
 export class Message implements IMessage {
