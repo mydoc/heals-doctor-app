@@ -41,6 +41,9 @@ const AppointmentsPanel = ({ appointments }: AppointmentsPanelProps) => {
             <InfoIcon /><MenuLabel>{`Appointments (${getFilteredAppointments().length})`}</MenuLabel>
             <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
             <Menu anchorEl={anchor} open={isMenuOpened} onClose={() => setAnchor(null)}>
+                <MenuItem onClick={() => {}}>Today</MenuItem>
+                <MenuItem onClick={() => {}}>Upcoming</MenuItem>
+                <Divider />
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.New)}>{showType(AppointmentStatus.New) ? <ListItemIcon><CheckCircleIcon style={{ color: "yellow" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.New)}>New</ListItemText></MenuItem>
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.Accepted)}>{showType(AppointmentStatus.Accepted) ? <ListItemIcon><CheckCircleIcon style={{ color: "green" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.Accepted)}>Accepted</ListItemText></MenuItem>
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.Completed)}>{showType(AppointmentStatus.Completed) ? <ListItemIcon><CheckCircleIcon style={{ color: "blue" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.Completed)}>Completed</ListItemText></MenuItem>

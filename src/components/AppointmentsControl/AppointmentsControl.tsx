@@ -13,8 +13,8 @@ interface AppointmentsControlProps {
 const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlProps) => {
 
     const hasSortedAppointments = (sortedAppointments && sortedAppointments.length > 0);
-    const scalefactor = 1 / 13235.294117647058823529411764706;
     const min15 = 15 * 60 * 1000;
+    const scalefactor = 1 / 13235.294117647058823529411764706; // scale y-coordinate so that 15 mins = 68px with absolute positioning
     const origin = hasSortedAppointments ? Math.floor(sortedAppointments[0].startAt.getTime() / min15) * min15 : 0;
     const timelineHeight = hasSortedAppointments ? (sortedAppointments[sortedAppointments.length - 1].endAt.getTime() - origin) * scalefactor : 0;
 
