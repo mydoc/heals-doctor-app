@@ -24,7 +24,7 @@ export const SlideOutWrapper = styled.div <{ open: boolean }>`
     left: 0;
     right: 0;
     bottom: 0;
-    top: ${ props => props.open ? `10px` : `100%`};
+    top: ${ props => props.open ? `20px` : `100%`};
 
     transition: top 0.225s ease-in;//, display 3s step-end;
 

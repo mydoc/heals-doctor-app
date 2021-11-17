@@ -21,6 +21,14 @@ export const Wrapper = styled.div <{ height: number}>`
     }
 `;
 
+export const NowMarker = styled.div<{position: number}>`
+    position: absolute;
+    width: 100%;
+    top: ${props => `${props.position}px`};
+    height: 2px;
+    background-color: #2885FF;
+`
+
 export const Card = styled.div<{ status: AppointmentStatus, start: number, duration: number}>`
 
     &.timeline {

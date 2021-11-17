@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
     grid-template-rows: min-content 1fr;
     height: 100%;
     overflow: hidden;
+
+    position: relative;
 `;
 
 export const Content = styled.div`

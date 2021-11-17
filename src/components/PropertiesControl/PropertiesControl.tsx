@@ -1,6 +1,7 @@
 import React from "react";
-import { Episode, EpisodeType } from "../../interfaces/episode";
+import { AppointmentStatus, Episode, EpisodeType } from "../../interfaces/episode";
 import { Wrapper } from "./PropertiesControl.styles"
+import { format } from 'date-fns';
 
 interface PropertiesControlProp {
     instance: Episode | null;
@@ -34,7 +35,7 @@ const PropertiesControl = ({instance} : PropertiesControlProp) => {
                 <div className="key-bar">appointments</div>
                 <div className="object-area">
                     {instance.appointments.map(a => (
-                        <React.Fragment key={a.id}><div className="object-table-key">{a.id}</div><div className="object-table-value">{`${a.startAt} - ${a.startAt} (${a.status})`}</div></React.Fragment>
+                        <React.Fragment key={a.id}><div className="object-table-key">{a.id}</div><div className="object-table-value">{`${format(a.startAt, 'dd MMM yy, HH:mm')} - ${format(a.endAt, 'HH:mm OOOO')} (${AppointmentStatus[a.status]})`}</div></React.Fragment>
                     ))}
                 </div>
             </div>
