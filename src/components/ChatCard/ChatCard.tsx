@@ -1,7 +1,8 @@
 import { IconButton } from '@mui/material';
 import { Wrapper, FaceImages, Menu, Content, Info } from './ChatCard.styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { IUser, Episode } from '../../interfaces';
+import { Episode } from '../../interfaces/episode';
+import { IUser } from '../../interfaces/user';
 
 
 interface ChatCardProps {
@@ -9,9 +10,10 @@ interface ChatCardProps {
     session: IUser;
     onClick: (e: Episode) => void;
     isActive?: boolean;
+    onMore: (e: Episode) => void;
 }
 
-const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
+const ChatCard = ({ episode, session, onClick, isActive, onMore }: ChatCardProps) => {
 
     const { participants, messages } = episode;
 
@@ -31,7 +33,7 @@ const ChatCard = ({ episode, session, onClick, isActive }: ChatCardProps) => {
                     </div>
                 </Info>
                 <Menu>
-                    <IconButton><MoreVertIcon /></IconButton>
+                    <IconButton onClick={() => onMore(episode)}><MoreVertIcon /></IconButton>
                 </Menu>
             </Content>
         </Wrapper>

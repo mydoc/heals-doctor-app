@@ -1,5 +1,8 @@
-import { IDatabase, IUser, UserRole, IAppointment, AppointmentStatus, IProvider, IEpisode, IChatMessage, EpisodeStatus, EpisodeType, ChatMessageType } from "../interfaces";
 import { Database } from "../Database";
+import { IDatabase } from "../interfaces/data";
+import { AppointmentStatus, MessageType, EpisodeStatus, EpisodeType, IAppointment, IMessage, IEpisode } from "../interfaces/episode";
+import { IProvider } from "../interfaces/provider";
+import { IUser, UserRole } from "../interfaces/user";
 
 const RANDOM = {
     firstNames: ["Sarah", "Johnnie", "Wm", "Megan", "Lynn", "Andre", "Celia", "Delia", "Geoffrey", "Dora", "Fannie", "Colin", "Marlene", "Tammy", "Grady", "Lola", "Bonnie", "Luke", "Marta", "Russell", "Felix", "Kyle", "Ricardo", "Lois", "Vanessa", "Caleb", "Woodrow", "Joe", "Joel", "Christie", "Kevin", "April", "Ada", "Don", "Darnell", "Dixie", "Moses", "Guadalupe", "Marlon", "Bradley", "Blanca", "Esther", "Gail", "Laurie", "Amos", "Mitchell", "Joann", "Marsha", "Preston", "Jean", "Nick", "Antonia", "Carla", "Grant", "Shelia", "Natalie", "Sonya", "Christy", "Omar", "Jody", "Traci", "Judith", "Sherman", "Leroy", "Stacey", "Elmer", "Irene", "Guy", "Kerry", "Lawrence", "Hazel", "Karla", "Dianne", "Vincent", "Domingo", "Wilfred", "Dana", "Willie", "Misty", "Leslie", "Ken", "Lela", "Kelli", "Yvonne", "Orville", "Sonia", "Harriet", "Bernadette", "Jeannie", "Ted", "Mike", "Vivian", "Brooke", "Kara", "Zachary", "Evelyn", "Carl", "Cristina", "Candace", "Jerom"],
@@ -146,7 +149,7 @@ export default class Generator {
             "birthdate": this.randomDate(),
             "firstName": firstName,
             "lastName": lastName,
-            "email": `${firstName}.${firstName}@${domain}`,
+            "email": `${firstName}.${lastName}@${domain}.com`,
             "contact": this.random(80000000, 99999999).toString(),
             "gender": gender,
             "nationalId": this.random(10000000, 99999999).toString(),
@@ -195,11 +198,11 @@ export default class Generator {
 
         const messsages = [];
         for (let i = 0; i < countMessages; i++) {
-            const message: IChatMessage = {
+            const message: IMessage = {
                 "userId": this.anyone(participants).id,
                 "message": Generator.getSentence(),
                 "datetime": nextDateTime,
-                "type": ChatMessageType.Message
+                "type": MessageType.Message
             }
             nextDateTime = new Date(nextDateTime.getTime() + this.random(sec10, min15));
             messsages.push(message);
@@ -215,7 +218,7 @@ export default class Generator {
             "episodeId": this.anyone(episodes).id,
             "startAt": new Date(),
             "endAt": new Date(),
-            "status": AppointmentStatus.Open,
+            "status": this.random(1, 5) as AppointmentStatus,
         }
 
         return appointment;

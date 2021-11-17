@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { Database } from "../Database";
-import { IDatabase, IUser } from "../interfaces";
+import { IDatabase } from "../interfaces/data";
+import { IUser } from "../interfaces/user";
 
 
 export interface IDataContext {

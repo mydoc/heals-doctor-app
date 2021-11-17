@@ -1,6 +1,10 @@
-import { Episode, IUser } from "../../interfaces";
+import { useState } from "react";
+import { Episode } from "../../interfaces/episode";
+import { IUser } from "../../interfaces/user";
 import ChatCard from "../ChatCard/ChatCard";
-import { Wrapper, WrapperEmpty } from "./ChatListControl.styles";
+import PropertiesControl from "../PropertiesControl/PropertiesControl";
+import SlideOut from "../SlideOut/SlideOut";
+import { Wrapper, Content, ContentEmpty } from "./ChatListControl.styles";
 
 
 interface ChatListControlProps  {
@@ -11,15 +15,35 @@ interface ChatListControlProps  {
 }
 
 const ChatListControl = ({episodes, activeEpisode, session, onSelect}: ChatListControlProps) => {
+
+    const [isSlideOut, setIsSlideOut] = useState(false);
+
+    const handleMore = (e: Episode) => {
+        setIsSlideOut(true);
+        onSelect(e);
+    }
+
     if (episodes && episodes.length > 0) return (
         <Wrapper>
-        {episodes?.map((episode) => (
-            <ChatCard key={episode.id} isActive={episode.id === activeEpisode?.id } episode={episode} session={session!} onClick={ (e) => onSelect(e) }/>
-        ))}
+            <Content>
+            {episodes?.map((episode) => (
+            <ChatCard
+                key={episode.id}
+                isActive={episode.id === activeEpisode?.id }
+                episode={episode}
+                session={session!}
+                onClick={ (e) => onSelect(e) }
+                onMore={(e) => handleMore(e) }
+            />
+            ))}
+            </Content>
+            <SlideOut title='Properties' open={isSlideOut} onClose={() => setIsSlideOut(false)}>
+                <PropertiesControl instance={activeEpisode} />
+            </SlideOut>
         </Wrapper>
     )
 
-    return <WrapperEmpty>No Episodes</WrapperEmpty>
+    return <Wrapper><ContentEmpty>No Episodes</ContentEmpty></Wrapper>
 }
 
 export default ChatListControl;

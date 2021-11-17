@@ -1,5 +1,5 @@
 import React from "react";
-import { Episode, EpisodeType } from "../../interfaces";
+import { Episode, EpisodeType } from "../../interfaces/episode";
 import { Wrapper } from "./PropertiesControl.styles"
 
 interface PropertiesControlProp {

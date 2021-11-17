@@ -7,7 +7,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Panel from '../Panel/Panel';
 import CaseNoteControl from '../CaseNoteControl/CaseNoteControl';
 import PropertiesControl from '../PropertiesControl/PropertiesControl';
-import { Episode, EpisodeType, UserRole } from '../../interfaces';
+import { UserRole } from '../../interfaces/user';
+import { Episode, EpisodeType } from '../../interfaces/episode';
 import PatientControl from '../PatientControl/PatientControl';
 
 interface CasePanelProps {
@@ -42,6 +43,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     }
 
     const patient = episode?.participants.find(p => p.role === UserRole.patient) ?? null;
+    const doctor = episode?.participants.find(p => p.role === UserRole.doctor) ?? null;
 
     const selectControl = () => {
         switch(what) {
@@ -50,7 +52,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
             case What.Patient:
                 return <PatientControl patient={patient} />
             default:
-                return <CaseNoteControl />
+                return <CaseNoteControl patient={patient!} doctor={doctor!} onSubmitMedicalCertificate={() => {}} />
         }
     }
 

@@ -6,7 +6,6 @@ import { useContext, useState } from "react";
 import ChatIcon from '@mui/icons-material/Chat';
 import MenuIcon from '@mui/icons-material/Menu';
 import { DataContext } from '../../contexts/DataContext';
-import { Episode, EpisodeStatus, EpisodeType, UserRole } from "../../interfaces";
 import { Check } from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Panel from "../Panel/Panel";
@@ -14,6 +13,8 @@ import ChatListControl from "../ChatListControl/ChatListControl";
 
 import { Database } from '../../Database';
 import StartChatDialog from "../StartChatDialog/StartChatDialog";
+import { Episode, EpisodeStatus, EpisodeType } from "../../interfaces/episode";
+import { UserRole } from "../../interfaces/user";
 
 
 interface EpisodesPanelProp {

@@ -5,8 +5,9 @@ import ChatControl from '../ChatControl/ChatControl';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Episode, User, UserRole } from '../../interfaces';
+import { User, UserRole } from '../../interfaces/user';
 import Panel from '../Panel/Panel';
+import { Episode } from '../../interfaces/episode';
 
 interface ChatPanelProps {
     episode: Episode | null;

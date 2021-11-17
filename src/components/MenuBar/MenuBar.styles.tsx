@@ -35,7 +35,7 @@ export const Slider = styled.div<{ anchor?: HTMLElement | null }>`
     height: 5px;
 
     background-color: #106EBE;
-    z-index: 999;
+    //z-index: 999;
 
     left: ${props => props.anchor ? props.anchor.offsetLeft : '0'}px;
     width: ${props => props.anchor ? props.anchor.offsetWidth : '0'}px;
