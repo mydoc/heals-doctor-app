@@ -13,7 +13,7 @@ import { DataContext } from './contexts/DataContext';
 import useEpisodes from './hooks/useEpisodes';
 
 import Generator from './utils/Generator';
-import PropertiesPanel from './components/PropertiesPanel/PropertiesPanel';
+import AppointmentsPanel from './components/AppointmentsPanel/AppointmentsPanel';
 import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 
@@ -25,7 +25,7 @@ const EpisodesManager = () => {
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
     const {
-        episodes, activeEpisode,
+        episodes, activeEpisode, appointments,
         addMessage, selectActiveEpisode
     } = useEpisodes(session);
     const [isBotChat, setIsBotChat] = useState(false);
@@ -79,11 +79,11 @@ const EpisodesManager = () => {
     }
 
     return (
-        <Splitter primaryIndex={1} secondaryInitialSize={260} secondaryMinSize={50}>
+        <Splitter primaryIndex={1} secondaryInitialSize={300} secondaryMinSize={50}>
             <Splitter vertical primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={20} percentage={true}>
                 <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />
                 <Splitter vertical enabled={true} primaryIndex={0} secondaryInitialSize={50} secondaryMinSize={50}>
-                    <PropertiesPanel instance={activeEpisode} />
+                    <AppointmentsPanel appointments={appointments} />
                     <div>
                         <MenuBar>
                             <VideoCameraFrontIcon /><MenuLabel>{`${session?.firstName} ${session?.lastName}`}</MenuLabel>

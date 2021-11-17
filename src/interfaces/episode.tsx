@@ -1,5 +1,5 @@
 import { IProvider } from "./provider";
-import { IUser, User } from "./user";
+import { IUser, User, UserRole } from "./user";
 
 export enum MessageType {
     Appointment = 1,
@@ -83,6 +83,30 @@ export class Message implements IMessage {
 }
 
 export enum AppointmentStatus {
-    Open = 'Open',
-    Closed = 'Closed'
+    New = 1,
+    Accepted = 2,
+    Rejected = 3,
+    Completed = 4,
+    Timeout = 5,
+}
+
+export class Appointment implements IAppointment {
+    id: number;
+    episodeId: number;
+    startAt: Date;
+    endAt: Date;
+    status: AppointmentStatus;
+    patient: User | null;
+    doctor: User | null;
+
+    constructor(template: IAppointment, public episode: Episode) {
+        this.id = template.id;
+        this.episodeId = template.episodeId;
+        this.startAt = template.startAt;
+        this.endAt = template.endAt;
+        this.status = template.status;
+
+        this.patient = episode.participants.find(p => p.role === UserRole.patient) ?? null;
+        this.doctor = episode.participants.find(p => p.role === UserRole.doctor) ?? null;
+    }
 }

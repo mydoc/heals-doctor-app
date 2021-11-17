@@ -218,7 +218,7 @@ export default class Generator {
             "episodeId": this.anyone(episodes).id,
             "startAt": new Date(),
             "endAt": new Date(),
-            "status": AppointmentStatus.Open,
+            "status": this.random(1, 5) as AppointmentStatus,
         }
 
         return appointment;

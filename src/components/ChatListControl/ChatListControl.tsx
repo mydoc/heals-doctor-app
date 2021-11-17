@@ -4,7 +4,7 @@ import { IUser } from "../../interfaces/user";
 import ChatCard from "../ChatCard/ChatCard";
 import PropertiesControl from "../PropertiesControl/PropertiesControl";
 import SlideOut from "../SlideOut/SlideOut";
-import { Wrapper, WrapperEmpty } from "./ChatListControl.styles";
+import { Wrapper, Content, ContentEmpty } from "./ChatListControl.styles";
 
 
 interface ChatListControlProps  {
@@ -25,7 +25,8 @@ const ChatListControl = ({episodes, activeEpisode, session, onSelect}: ChatListC
 
     if (episodes && episodes.length > 0) return (
         <Wrapper>
-        {episodes?.map((episode) => (
+            <Content>
+            {episodes?.map((episode) => (
             <ChatCard
                 key={episode.id}
                 isActive={episode.id === activeEpisode?.id }
@@ -34,14 +35,15 @@ const ChatListControl = ({episodes, activeEpisode, session, onSelect}: ChatListC
                 onClick={ (e) => onSelect(e) }
                 onMore={(e) => handleMore(e) }
             />
-        ))}
+            ))}
+            </Content>
             <SlideOut title='Properties' open={isSlideOut} onClose={() => setIsSlideOut(false)}>
                 <PropertiesControl instance={activeEpisode} />
             </SlideOut>
         </Wrapper>
     )
 
-    return <WrapperEmpty>No Episodes</WrapperEmpty>
+    return <Wrapper><ContentEmpty>No Episodes</ContentEmpty></Wrapper>
 }
 
 export default ChatListControl;

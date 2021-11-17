@@ -1,38 +1,53 @@
 import { DataContext, IDataContext } from '../contexts/DataContext';
 import { useContext, useEffect, useState } from 'react';
 import { IUser, User } from '../interfaces/user';
-import { Message, Episode } from '../interfaces/episode';
+import { Message, Episode, Appointment } from '../interfaces/episode';
 
 export const useEpisodes = (session: IUser | null) => {
   const { data } = useContext<IDataContext>(DataContext);
+
+  // main state
   const [episodes, setEpisodes] = useState<Episode[]>([]);
+
+  // derived states
   const [activeEpisode, setActiveEpisode] = useState<Episode | null>(null);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     if (session?.id) {
 
-      const getEpisodesByUser = (userId: number): Episode[] => {
+      const getEpisodesByUser = (userId: number): [Episode[], Appointment[]] => {
         const userEpisodes = data.episodes.filter(episode => {
           return episode.participants.find((user) => user.id === userId) !== undefined;
         });
 
-        const episodes: Episode[] = userEpisodes.map((episode) => {
-          const participants = episode.participants.map((participant) => new User(participant));
-          const provider = data.providers.find((provider) => provider.id === episode.providerId)!;
-          const appointments = data.appointments.filter((appt) => episode.id === appt.episodeId) ?? [];
-          const messages = episode.messages.map((m) => new Message(m, participants.find(p => p.id === m.userId)!));
-          episode.participants = participants;
-          return new Episode(episode, appointments, provider, messages, participants);
-        });
+        const appointments: Appointment[] = [];
+        const episodes: Episode[] = [];
 
-        return episodes;
+        for (let i = 0; i < userEpisodes.length; i++) {
+          const episode = userEpisodes[i];
+          const _participants = episode.participants.map((participant) => new User(participant));
+          const _provider = data.providers.find((provider) => provider.id === episode.providerId)!;
+          const _appointments = data.appointments.filter((appt) => episode.id === appt.episodeId) ?? [];
+          const _messages = episode.messages.map((m) => new Message(m, _participants.find(p => p.id === m.userId)!));
+          episode.participants = _participants;
+          const _episode = new Episode(episode, _appointments, _provider, _messages, _participants);
+
+          // save the appointments
+          appointments.push(..._appointments.map(a => new Appointment(a, _episode)));
+          episodes.push(_episode);
+        }
+
+        appointments.sort((a, b) => a.startAt.getTime() - b.startAt.getTime());
+
+        return [episodes, appointments];
       }
 
-      const userEpisodes = getEpisodesByUser(session.id);
+      const [userEpisodes, userAppointments] = getEpisodesByUser(session.id);
 
       setEpisodes(userEpisodes);
-
-      if(userEpisodes.length > 0) setActiveEpisode(userEpisodes[0]);
+      if (userEpisodes.length > 0) setActiveEpisode(userEpisodes[0]);
+      setAppointments(userAppointments);
 
     } else {
       setEpisodes([]);
@@ -55,7 +70,7 @@ export const useEpisodes = (session: IUser | null) => {
   }
 
   return {
-    episodes, activeEpisode,
+    episodes, activeEpisode, appointments,
     selectActiveEpisode, addMessage
   };
 }

@@ -15,7 +15,7 @@ export const SlideOutBackground = styled.div <{ open: boolean }>`
 export const SlideOutWrapper = styled.div <{ open: boolean }>`
     position: absolute;
     background-color: #CFD7E5;
-    
+
     display: grid;
     grid-template-rows: min-content 1fr;
 
@@ -24,9 +24,9 @@ export const SlideOutWrapper = styled.div <{ open: boolean }>`
     left: 0;
     right: 0;
     bottom: 0;
-    top: ${ props => props.open ? `20px` : `100%`};
+    top: ${ props => props.open ? `10px` : `100%`};
 
-    transition: all 0.25s ease-out;
+    transition: top 0.225s ease-in;//, display 3s step-end;
 
     .header {
         display: flex;
