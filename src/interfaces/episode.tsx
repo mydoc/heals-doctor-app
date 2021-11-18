@@ -2,10 +2,10 @@ import { IProvider } from "./provider";
 import { IUser, User, UserRole } from "./user";
 
 export enum MessageType {
-    Appointment = 1,
-    JSON = 2,
-    Laboratory = 3,
-    Message = 4,
+    Message = 1,
+    Json = 2,
+    Appointment = 3,
+    Laboratory = 4,
     Referral = 5
 }
 

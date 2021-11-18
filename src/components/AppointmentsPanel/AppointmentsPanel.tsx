@@ -1,8 +1,8 @@
 import { useState } from "react";
-import InfoIcon from '@mui/icons-material/Info';
 import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MenuIcon from '@mui/icons-material/Menu';
+import VideocamIcon from '@mui/icons-material/Videocam';
 
 import { Appointment, AppointmentStatus } from "../../interfaces/episode";
 import MenuLabel from "../MenuLabel/MenuLabel";
@@ -38,7 +38,7 @@ const AppointmentsPanel = ({ appointments }: AppointmentsPanelProps) => {
 
     return (
         <Panel control={<AppointmentsControl sortedAppointments={getFilteredAppointments()} view={view}/>}>
-            <InfoIcon /><MenuLabel>{`Appointments (${getFilteredAppointments().length})`}</MenuLabel>
+            <VideocamIcon /><MenuLabel>{`Appointments (${getFilteredAppointments().length})`}</MenuLabel>
             <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
             <Menu anchorEl={anchor} open={isMenuOpened} onClose={() => setAnchor(null)}>
                 <MenuItem onClick={() => {}}>Today</MenuItem>

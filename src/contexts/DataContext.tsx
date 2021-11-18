@@ -17,7 +17,7 @@ interface DataProviderProps {
     children: JSX.Element | JSX.Element[];
 }
 
-const DataProvider = ({ children }: DataProviderProps) => {
+export const DataProvider = ({ children }: DataProviderProps) => {
 
     const [data, setData] = useState<IDatabase>(Database);
     const [session, setSession] = useState<IUser | null>(null);
@@ -28,5 +28,3 @@ const DataProvider = ({ children }: DataProviderProps) => {
         </DataContext.Provider>
     )
 }
-
-export default DataProvider;

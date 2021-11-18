@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import DataProvider from './contexts/DataContext';
+import { DataProvider } from './contexts/DataContext';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

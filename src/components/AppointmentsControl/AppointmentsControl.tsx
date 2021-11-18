@@ -52,7 +52,7 @@ const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlPr
                     </Card>
                 )
             })}
-            <NowMarker position={nowMarkerPos} />
+            <NowMarker position={nowMarkerPos} className={view} />
         </Wrapper>
     );
 }
