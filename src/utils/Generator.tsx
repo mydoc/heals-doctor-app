@@ -1,4 +1,3 @@
-import { getTouchRippleUtilityClass } from "@mui/material";
 import { Database } from "../Database";
 import { IDatabase } from "../interfaces/data";
 import { AppointmentStatus, MessageType, EpisodeStatus, EpisodeType, IAppointment, IMessage, IEpisode } from "../interfaces/episode";
@@ -130,9 +129,10 @@ export default class Generator {
 
         // create case notes
         database.episodes.forEach(e => {
-            const [casenote, casenoteRevisions] = this.randomCasenote(e);
-            casenote && database.casenotes.push(casenote);
-            casenoteRevisions && database.casenoteRevisions.push(...casenoteRevisions);
+            if (e.type === EpisodeType.Diary) {
+                const casenote = this.randomCasenote(e);
+                casenote && database.casenotes.push(casenote);
+            }
         });
 
         return database;
@@ -171,9 +171,12 @@ export default class Generator {
             "doctorNote": this.randomSentence(),
             "followup": new Date(),
             "gpVisit": this.anyone([true, false]),
-            "mydocReferred": this.random
             "patientNote": this.randomSentence(),
-
+            "prescription": this.anyone([true, false]),
+            "aeVisit": this.anyone([true, false]),
+            "mydocReferred": this.anyone(['', this.randomSentence()]),
+            "specialistReferred": this.anyone(['', this.randomSentence()]),
+            "alliedHealthReferred": this.anyone(['', this.randomSentence()]),
         }
 
         return revision;
