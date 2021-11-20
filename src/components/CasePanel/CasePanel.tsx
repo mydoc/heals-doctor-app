@@ -50,7 +50,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
             case What.Info:
                 return <PropertiesControl instance={episode} />
             case What.Patient:
-                return <PatientControl patient={patient} />
+                return <PatientControl patient={patient!} />
             default:
                 return <CaseNoteControl patient={patient!} doctor={doctor!} onSubmitMedicalCertificate={() => {}} />
         }

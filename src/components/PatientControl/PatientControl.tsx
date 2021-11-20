@@ -4,17 +4,29 @@ import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from "@mui/material";
 import SlideOut from "../SlideOut/SlideOut";
 import { useState } from "react";
-import NationalIdForm from "../NationalIdForm/NationalIdForm";
+import NationalIdForm from "../Form/NationalIdForm";
+import MedicalConditionForm from "../Form/MedicalConditionForm";
 
 interface PatientControlProps {
-    patient: User | null;
+    patient: User;
 }
 
 const PatientControl = ({ patient }: PatientControlProps) => {
 
-    const [editForm, setEditForm] = useState<null | 'nationalId'>(null);
+    const [editForm, setEditForm] = useState<null | 'Edit Identification' | 'Edit Medical Condition'>(null);
 
-    const isNationalIdFormOpened = Boolean(editForm === 'nationalId');
+    const isEditFormOpened = Boolean(editForm);
+
+    const getEditForm = (): JSX.Element => {
+        switch (editForm) {
+            case 'Edit Identification':
+                return <NationalIdForm patient={patient} onSubmit={() => setEditForm(null)} onCancel={() => setEditForm(null)} />
+            case 'Edit Medical Condition':
+                return <MedicalConditionForm patient={patient} onSubmit={() => setEditForm(null)} onCancel={() => setEditForm(null)} />
+            default:
+                return <></>
+        }
+    }
 
 
     if(!patient) return <Wrapper>No Patient Selected</Wrapper>
@@ -49,7 +61,7 @@ const PatientControl = ({ patient }: PatientControlProps) => {
                 <div>
                     <div className="key-bar">
                         <span>nationalId</span>
-                        <IconButton className="icon-button" onClick={() => setEditForm('nationalId')}><EditIcon className="icon"/></IconButton>
+                        <IconButton className="icon-button" onClick={() => setEditForm('Edit Identification')}><EditIcon className="icon"/></IconButton>
                     </div>
                     <div className="object-area">
                         <div className="object-table-key">number</div><div className="object-table-value">{patient.nationalId}</div>
@@ -59,7 +71,7 @@ const PatientControl = ({ patient }: PatientControlProps) => {
                 <div>
                     <div className="key-bar">
                         <span>existing medical conditions</span>
-                        <IconButton className="icon-button"><EditIcon className="icon" /></IconButton>
+                        <IconButton className="icon-button" onClick={() => setEditForm('Edit Medical Condition')}><EditIcon className="icon" /></IconButton>
                     </div>
                     <div className="object-area">
                         <div className="object-table-key">conditions</div><div className="object-table-value">{patient.conditions}</div>
@@ -89,8 +101,8 @@ const PatientControl = ({ patient }: PatientControlProps) => {
                     </div>
                 </div>
             </Content>
-            <SlideOut title="Edit Identification" open={isNationalIdFormOpened} onClose={() => { setEditForm(null) }}>
-                <NationalIdForm onSubmit={() => setEditForm(null)} onCancel={() => setEditForm(null)} />
+            <SlideOut title={editForm ?? ''} open={isEditFormOpened} onClose={() => { setEditForm(null) }}>
+                {getEditForm()}
             </SlideOut>
         </Wrapper>
     )

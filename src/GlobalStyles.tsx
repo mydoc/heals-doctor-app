@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
     :root {
+        --defaultFont: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
         --headerHeight: 50px;
         --maxWidth: 1280px;
         --onSurface: #24292F;
@@ -16,6 +18,9 @@ export const GlobalStyles = createGlobalStyle`
         --iconSmall: 20px;
         --iconMed: 36px;
         --iconLarge: 40px;
+
+
+
     }
 
     ::-webkit-scrollbar {
@@ -29,7 +34,7 @@ export const GlobalStyles = createGlobalStyle`
 
     * {
         box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: var(--defaultFont);
         font-size: 14px;
     }
 
