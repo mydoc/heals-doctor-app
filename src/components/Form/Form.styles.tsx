@@ -9,7 +9,15 @@ export const Form = styled.form`
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
+
+    margin-bottom: 48px;
 `;
+
+export const FormSectionTitle = styled.h2`
+    padding: 0 0 8px 0;
+    border-bottom: 1px solid #D8DEE4;
+    margin: 0;
+`
 
 export const FormField = styled.div`
     margin-bottom: 12px;
@@ -20,6 +28,13 @@ export const FormField = styled.div`
         margin-bottom: 6px;
     }
 `;
+
+export const FormFieldNote = styled.div`
+    color: #57606A;
+    font-size: var(--fontTiny);
+    margin: 4px 0 2px 0;
+    line-height: 18px;
+`
 
 export const FormFieldInput = styled.div`
     select, input[type=text], textarea {
