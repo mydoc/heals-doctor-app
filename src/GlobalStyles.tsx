@@ -4,7 +4,7 @@ export const GlobalStyles = createGlobalStyle`
     :root {
         --headerHeight: 50px;
         --maxWidth: 1280px;
-        --onSurface: #000;
+        --onSurface: #24292F;
         --lightGrey: #CBDCF7; // #eee;
         --medGrey: #353535;
         --darkGrey: #1c1c1c;
@@ -29,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
 
     * {
         box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 14px;
     }
 

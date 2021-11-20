@@ -3,8 +3,8 @@ import { Content, Wrapper } from "./PatientControl.styles";
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from "@mui/material";
 import SlideOut from "../SlideOut/SlideOut";
-import NationalIDForm from "../NationalIdForm/NationalIDForm";
 import { useState } from "react";
+import NationalIdForm from "../NationalIdForm/NationalIdForm";
 
 interface PatientControlProps {
     patient: User | null;
@@ -90,7 +90,7 @@ const PatientControl = ({ patient }: PatientControlProps) => {
                 </div>
             </Content>
             <SlideOut title="Edit Identification" open={isNationalIdFormOpened} onClose={() => { setEditForm(null) }}>
-                <NationalIDForm onSubmit={() => setEditForm(null)} onCancel={() => setEditForm(null)} />
+                <NationalIdForm onSubmit={() => setEditForm(null)} onCancel={() => setEditForm(null)} />
             </SlideOut>
         </Wrapper>
     )

@@ -1,31 +1,40 @@
+import { Wrapper } from "./NationalIdForm.styles";
 
 interface NationalIDFormProps {
     onSubmit?: (e: any) => void;
     onCancel?: (e: any) => void;
 }
 
-const NationalIDForm = ({ onSubmit, onCancel }: NationalIDFormProps) => (
-    <div>
+const NationalIdForm = ({ onSubmit, onCancel }: NationalIDFormProps) => (
+    <Wrapper>
         <form onSubmit={(e) => onSubmit && onSubmit(e)} >
-            <div>
-                <label>Identification Type</label>
-                <select></select>
+            <div className="field">
+                <label>Identification type</label>
+                <div className="input">
+                    <select>
+                        <option>NRIC</option>
+                        <option>Passport</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label>Identification Number</label>
-                <input type="text" />
+            <div className="field">
+                <label>Identification number</label>
+                <div className="input"><input type="text" /></div>
             </div>
-            <div>
-                <label>Front Image</label>
-                <input type="file" />
+            <div className="field">
+                <label>Front image</label>
+                <div className="input"><input type="file" /></div>
             </div>
-            <div>
-                <label>Back Image</label>
-                <input type="file" />
+            <div className="field">
+                <label>Back image</label>
+                <div className="input"><input type="file" /></div>
             </div>
-            <button type="submit">OK</button> <button type="button" onClick={(e) => onCancel && onCancel(e)}>cancel</button>
+            <div className="actions">
+                <button type="submit">OK</button>
+                <button type="button" onClick={(e) => onCancel && onCancel(e)}>Cancel</button>
+            </div>
         </form>
-    </div>
+    </Wrapper>
 )
 
-export default NationalIDForm;
+export default NationalIdForm;
