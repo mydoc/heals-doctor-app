@@ -19,9 +19,6 @@ export const GlobalStyles = createGlobalStyle`
         --iconSmall: 20px;
         --iconMed: 36px;
         --iconLarge: 40px;
-
-
-
     }
 
     ::-webkit-scrollbar {
@@ -35,12 +32,12 @@ export const GlobalStyles = createGlobalStyle`
 
     * {
         box-sizing: border-box;
-        color: #24292F;
         font-family: var(--defaultFont);
         font-size: 14px;
     }
 
     body {
+        color: #24292F;
         margin: 0;
         padding: 0;
 
