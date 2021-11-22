@@ -37,6 +37,11 @@ export const FormFieldNote = styled.div`
 `
 
 export const FormFieldInput = styled.div`
+
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
     select, input[type=text], textarea {
         background-color: #F6F8FA;
         border-radius: 6px;

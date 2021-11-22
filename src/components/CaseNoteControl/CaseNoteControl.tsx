@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IMedicalCertificate } from "../../interfaces/records";
 import { User } from "../../interfaces/user";
+import CasenoteForm from "../Form/CasenoteForm";
 import MedicalCertificateControl from "../MedicalCertificateControl/MedicalCertificateControl";
 import MenuBar from "../MenuBar/MenuBar";
 import MenuButton from "../MenuButton/MenuButton";
@@ -28,6 +29,7 @@ const CaseNoteControl = ({ patient, doctor, onSubmitMedicalCertificate }: CaseNo
                 <MenuButton onClick={(e) => setAnchor(e.currentTarget)}>Prescription</MenuButton>
             </MenuBar>
             <Content>
+                <CasenoteForm patient={patient} onSubmit={() => { } } onCancel={() => { }}/>
                 <form className="casenote-form">
                     <div className="input-field">
                         <label>Consulted For</label>
