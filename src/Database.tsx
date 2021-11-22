@@ -3,6 +3,8 @@ import { IDatabase } from "./interfaces/data";
 export const Database: IDatabase = {
      // will be populated randomly on init
     appointments: [], users: [], episodes: [],
+    casenotes: [], casenoteRevisions: [],
+    prescriptions: [], referrals: [], medicalCertificates: [],
 
     // define providers
     providers: [

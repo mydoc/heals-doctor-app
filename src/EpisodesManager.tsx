@@ -42,7 +42,7 @@ const EpisodesManager = () => {
                     const other = activeEpisode!.participants.filter((p) => p.id !== session!.id);
                     const newMessage = new Message({
                         "datetime": new Date(),
-                        "message": Generator.getSentence(),
+                        "message": Generator.randomSentence(),
                         "userId": other[0].id,
                         "type": MessageType.Message
                     }, other[0]);

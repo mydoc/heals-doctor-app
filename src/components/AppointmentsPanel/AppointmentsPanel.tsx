@@ -1,8 +1,8 @@
 import { useState } from "react";
-import InfoIcon from '@mui/icons-material/Info';
 import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import MenuIcon from '@mui/icons-material/Menu';
+import VideocamIcon from '@mui/icons-material/Videocam';
 
 import { Appointment, AppointmentStatus } from "../../interfaces/episode";
 import MenuLabel from "../MenuLabel/MenuLabel";
@@ -38,9 +38,12 @@ const AppointmentsPanel = ({ appointments }: AppointmentsPanelProps) => {
 
     return (
         <Panel control={<AppointmentsControl sortedAppointments={getFilteredAppointments()} view={view}/>}>
-            <InfoIcon /><MenuLabel>{`Appointments (${getFilteredAppointments().length})`}</MenuLabel>
+            <VideocamIcon /><MenuLabel>{`Appointments (${getFilteredAppointments().length})`}</MenuLabel>
             <div className="align-right"><IconButton id="expand-menu-chat" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
             <Menu anchorEl={anchor} open={isMenuOpened} onClose={() => setAnchor(null)}>
+                <MenuItem onClick={() => {}}>Today</MenuItem>
+                <MenuItem onClick={() => {}}>Upcoming</MenuItem>
+                <Divider />
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.New)}>{showType(AppointmentStatus.New) ? <ListItemIcon><CheckCircleIcon style={{ color: "yellow" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.New)}>New</ListItemText></MenuItem>
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.Accepted)}>{showType(AppointmentStatus.Accepted) ? <ListItemIcon><CheckCircleIcon style={{ color: "green" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.Accepted)}>Accepted</ListItemText></MenuItem>
                 <MenuItem onClick={() => toogleTypeFilter(AppointmentStatus.Completed)}>{showType(AppointmentStatus.Completed) ? <ListItemIcon><CheckCircleIcon style={{ color: "blue" }} /></ListItemIcon> : ''}<ListItemText inset={!showType(AppointmentStatus.Completed)}>Completed</ListItemText></MenuItem>

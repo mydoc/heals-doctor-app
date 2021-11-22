@@ -2,6 +2,7 @@ import { Database } from "../Database";
 import { IDatabase } from "../interfaces/data";
 import { AppointmentStatus, MessageType, EpisodeStatus, EpisodeType, IAppointment, IMessage, IEpisode } from "../interfaces/episode";
 import { IProvider } from "../interfaces/provider";
+import { ConsultedFor, ICasenote, ICasenoteRevision } from "../interfaces/records";
 import { IUser, UserRole } from "../interfaces/user";
 
 const RANDOM = {
@@ -72,7 +73,7 @@ const RANDOM = {
 
 export default class Generator {
 
-    public static getSentence() {
+    public static randomSentence() {
         const index = Math.floor(Math.random() * RANDOM.sentences.length)
         return RANDOM.sentences[index];
     }
@@ -126,6 +127,14 @@ export default class Generator {
         database.users.push(...patients, ...doctors);
         database.episodes.push(...episodes);
 
+        // create case notes
+        database.episodes.forEach(e => {
+            if (e.type === EpisodeType.Diary) {
+                const casenote = this.randomCasenote(e);
+                casenote && database.casenotes.push(casenote);
+            }
+        });
+
         return database;
     }
 
@@ -135,6 +144,42 @@ export default class Generator {
 
     public static anyone<T>(items: T[]):T {
         return items[this.random(0, items.length - 1)];
+    }
+
+    public static randomCasenote(episode: IEpisode): ICasenote | null{
+        const doctor = episode.participants.find(p => p.role === UserRole.doctor);
+        const patient = episode.participants.find(p => p.role === UserRole.patient);
+        if (doctor && patient) {
+            const casenote: ICasenote = {
+                "id": this.random(10000, 99999),
+                "episodeId": episode.id,
+                "doctorId": doctor?.id,
+                "patientId": patient?.id
+            }
+            return casenote;
+        }
+        return null;
+    }
+
+    public static randomCasenoteRevision(casenote: ICasenote): ICasenoteRevision {
+        const revision: ICasenoteRevision = {
+            "id": this.random(10000, 99999),
+            "consultFor": this.random(1, 5) as ConsultedFor,
+            "casenoteId": casenote.id,
+            "complaints": this.randomSentence(),
+            "createdAt": new Date(),
+            "doctorNote": this.randomSentence(),
+            "followup": new Date(),
+            "gpVisit": this.anyone([true, false]),
+            "patientNote": this.randomSentence(),
+            "prescription": this.anyone([true, false]),
+            "aeVisit": this.anyone([true, false]),
+            "mydocReferred": this.anyone(['', this.randomSentence()]),
+            "specialistReferred": this.anyone(['', this.randomSentence()]),
+            "alliedHealthReferred": this.anyone(['', this.randomSentence()]),
+        }
+
+        return revision;
     }
 
     public static randomUser(): IUser {
@@ -200,7 +245,7 @@ export default class Generator {
         for (let i = 0; i < countMessages; i++) {
             const message: IMessage = {
                 "userId": this.anyone(participants).id,
-                "message": Generator.getSentence(),
+                "message": Generator.randomSentence(),
                 "datetime": nextDateTime,
                 "type": MessageType.Message
             }

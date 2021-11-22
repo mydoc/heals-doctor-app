@@ -1,5 +1,5 @@
 import { Appointment } from "../../interfaces/episode";
-import { Card, Wrapper } from "./AppointmentsControl.styles";
+import { Card, NowMarker, Wrapper } from "./AppointmentsControl.styles";
 import { format } from 'date-fns';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { IconButton } from "@mui/material";
@@ -13,18 +13,16 @@ interface AppointmentsControlProps {
 const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlProps) => {
 
     const hasSortedAppointments = (sortedAppointments && sortedAppointments.length > 0);
-    const scalefactor = 1 / 13235.294117647058823529411764706;
     const min15 = 15 * 60 * 1000;
+    const scalefactor = 1 / 13235.294117647058823529411764706; // scale y-coordinate so that 15 mins = 68px with absolute positioning
     const origin = hasSortedAppointments ? Math.floor(sortedAppointments[0].startAt.getTime() / min15) * min15 : 0;
     const timelineHeight = hasSortedAppointments ? (sortedAppointments[sortedAppointments.length - 1].endAt.getTime() - origin) * scalefactor : 0;
+    const nowMarkerPos = (Date.now() - origin) * scalefactor;
 
     const onPositioning = (appointment: Appointment): { start: number, duration: number } => {
         if (sortedAppointments) {
-
             const start = (appointment.startAt.getTime() - origin) * scalefactor;
             const duration = (appointment.endAt.getTime() - appointment.startAt.getTime()) * scalefactor;
-
-            console.log(appointment.id, start, duration);
             return { start, duration }
         } else {
             return { start: 0, duration: 0 }
@@ -54,6 +52,7 @@ const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlPr
                     </Card>
                 )
             })}
+            <NowMarker position={nowMarkerPos} className={view} />
         </Wrapper>
     );
 }
