@@ -1,15 +1,12 @@
-import { IMedicalCertificate } from "../../interfaces/records";
 import { User } from "../../interfaces/user";
 import CasenoteForm from "../Form/CasenoteForm/CasenoteForm";
-import { Content, Wrapper } from "./CaseNoteControl.styles";
+import { Content, Wrapper } from './CasenoteControl.styles'
 
 interface CaseNoteControlProps {
-    patient: User,
-    doctor: User,
-    onSubmitMedicalCertificate: (e: IMedicalCertificate) => void;
+    patient: User
 }
 
-const CaseNoteControl = ({ patient, doctor, onSubmitMedicalCertificate }: CaseNoteControlProps) => {
+const CasenoteControl = ({ patient }: CaseNoteControlProps) => {
     return (
         <Wrapper>
             <Content>
@@ -19,4 +16,4 @@ const CaseNoteControl = ({ patient, doctor, onSubmitMedicalCertificate }: CaseNo
     );
 }
 
-export default CaseNoteControl;
+export default CasenoteControl;

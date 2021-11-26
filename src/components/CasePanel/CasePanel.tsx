@@ -5,10 +5,13 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import MenuIcon from '@mui/icons-material/Menu';
 import Panel from '../../braincase/Form/Panel/Panel';
-import CaseNoteControl from '../CaseNoteControl/CaseNoteControl';
+import CasenoteControl from '../CasenoteControl/CasenoteControl';
 import { UserRole } from '../../interfaces/user';
 import { Episode, EpisodeType } from '../../interfaces/episode';
 import PatientControl from '../PatientControl/PatientControl';
+import CartControl from '../CartControl/CartControl';
+import Generator from '../../utils/Generator';
+import { TwoColumnView } from './CasePanel.styles';
 
 interface CasePanelProps {
     episode: Episode | null
@@ -27,6 +30,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
 
     const [anchor, setAnchor] = useState<null | HTMLElement>(null);
     const [what, setWhat] = useState<What | null>(What.Patient);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(menuAnchor);
@@ -40,14 +44,16 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     }
 
     const patient = episode?.participants.find(p => p.role === UserRole.patient) ?? null;
-    const doctor = episode?.participants.find(p => p.role === UserRole.doctor) ?? null;
+    // const doctor = episode?.participants.find(p => p.role === UserRole.doctor) ?? null;
 
     const selectControl = () => {
         switch(what) {
             case What.Patient:
                 return <PatientControl patient={patient!} />
+            case What.Lab:
+                return <CartControl patient={patient!} />
             default:
-                return <CaseNoteControl patient={patient!} doctor={doctor!} onSubmitMedicalCertificate={() => {}} />
+                return <CasenoteControl patient={patient!} />
         }
     }
 
@@ -58,7 +64,12 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     }, [isPatientCase, what, What.Patient])
 
     return (
-        <Panel anchor={anchor} control={selectControl()}>
+        <Panel anchor={anchor} control={
+            <TwoColumnView>
+                <div>{selectControl()}</div>
+                {isCartOpen && <div>{Array(50).fill(0).map(i => Generator.randomSentence()).join(', ')}</div>}
+            </TwoColumnView>
+        }>
             <FavoriteTwoToneIcon />
             <MenuButton id="file-button" onClick={e => handleClick(e, What.Patient)}>Patient</MenuButton>
             {!isPatientCase ? <></> : (
@@ -69,6 +80,8 @@ const CasePanel = ({ episode }: CasePanelProps) => {
                     <MenuButton onClick={e => handleClick(e, What.Rx)}>Rx</MenuButton>
                     <MenuButton onClick={e => handleClick(e, What.History)}>History</MenuButton>
                     <MenuButton onClick={e => handleClick(e, What.Lab)}>Lab</MenuButton>
+                    <MenuSeparator />
+                    <MenuButton onClick={e => setIsCartOpen(prev => !prev)}>Cart</MenuButton>
                 </>
             )}
             <div className="align-right"><IconButton onClick={(e: React.MouseEvent<HTMLButtonElement>) => setMenuAnchor(e.currentTarget) }><MenuIcon /></IconButton></div>
