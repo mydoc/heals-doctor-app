@@ -6,7 +6,7 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 
 import { Appointment, AppointmentStatus } from "../../interfaces/episode";
 import MenuLabel from "../MenuLabel/MenuLabel";
-import Panel from "../Panel/Panel";
+import Panel from "../../braincase/Form/Panel/Panel";
 import AppointmentsControl from "../AppointmentsControl/AppointmentsControl";
 
 interface AppointmentsPanelProps {

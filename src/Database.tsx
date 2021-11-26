@@ -4,7 +4,7 @@ export const Database: IDatabase = {
      // will be populated randomly on init
     appointments: [], users: [], episodes: [],
     casenotes: [], casenoteRevisions: [],
-    prescriptions: [], referrals: [], medicalCertificates: [],
+    prescriptions: [], referrals: [], medicalCertificates: [], icd10: [],
 
     // define providers
     providers: [

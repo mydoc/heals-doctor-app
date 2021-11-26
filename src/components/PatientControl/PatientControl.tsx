@@ -2,7 +2,7 @@ import { User, UserRole } from "../../interfaces/user";
 import { Content, Wrapper } from "./PatientControl.styles";
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from "@mui/material";
-import SlideOut from "../SlideOut/SlideOut";
+import SlideOut from "../../braincase/Form/SlideOut/SlideOut";
 import { useState } from "react";
 import NationalIdForm from "../Form/NationalIdForm";
 import MedicalConditionForm from "../Form/MedicalConditionForm";

@@ -4,9 +4,8 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import MenuIcon from '@mui/icons-material/Menu';
-import Panel from '../Panel/Panel';
+import Panel from '../../braincase/Form/Panel/Panel';
 import CaseNoteControl from '../CaseNoteControl/CaseNoteControl';
-import PropertiesControl from '../PropertiesControl/PropertiesControl';
 import { UserRole } from '../../interfaces/user';
 import { Episode, EpisodeType } from '../../interfaces/episode';
 import PatientControl from '../PatientControl/PatientControl';
@@ -18,7 +17,6 @@ interface CasePanelProps {
 const CasePanel = ({ episode }: CasePanelProps) => {
 
     enum What {
-        Info,
         Patient,
         CaseNote,
         eDocs,
@@ -28,7 +26,7 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     };
 
     const [anchor, setAnchor] = useState<null | HTMLElement>(null);
-    const [what, setWhat] = useState<What | null>(What.Info);
+    const [what, setWhat] = useState<What | null>(What.Patient);
 
     const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(menuAnchor);
@@ -36,7 +34,6 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>, what: What) => {
         setAnchor(event.currentTarget);
         setWhat(what);
-        console.log(event.currentTarget);
     }
     const handleClose = () => {
         setMenuAnchor(null);
@@ -47,8 +44,6 @@ const CasePanel = ({ episode }: CasePanelProps) => {
 
     const selectControl = () => {
         switch(what) {
-            case What.Info:
-                return <PropertiesControl instance={episode} />
             case What.Patient:
                 return <PatientControl patient={patient!} />
             default:
@@ -59,13 +54,12 @@ const CasePanel = ({ episode }: CasePanelProps) => {
     const isPatientCase = episode && [EpisodeType.Diary, EpisodeType.HealthScreening].includes(episode.type);
 
     useEffect(() => {
-        if (!isPatientCase && what && ![What.Info, What.Patient].includes(what) ) setWhat(What.Info);
-    }, [isPatientCase, what, What.Info, What.Patient])
+        if (!isPatientCase && what && ![What.Patient].includes(what)) setWhat(What.Patient);
+    }, [isPatientCase, what, What.Patient])
 
     return (
         <Panel anchor={anchor} control={selectControl()}>
             <FavoriteTwoToneIcon />
-            <MenuButton id="file-button" onClick={e => handleClick(e, What.Info)}>Info</MenuButton>
             <MenuButton id="file-button" onClick={e => handleClick(e, What.Patient)}>Patient</MenuButton>
             {!isPatientCase ? <></> : (
                 <>

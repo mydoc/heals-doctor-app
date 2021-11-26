@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { DataContext } from '../../contexts/DataContext';
 import { Check } from "@mui/icons-material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Panel from "../Panel/Panel";
+import Panel from "../../braincase/Form/Panel/Panel";
 import ChatListControl from "../ChatListControl/ChatListControl";
 
 import { Database } from '../../Database';

@@ -2,8 +2,9 @@ import { Database } from "../Database";
 import { IDatabase } from "../interfaces/data";
 import { AppointmentStatus, MessageType, EpisodeStatus, EpisodeType, IAppointment, IMessage, IEpisode } from "../interfaces/episode";
 import { IProvider } from "../interfaces/provider";
-import { ConsultedFor, ICasenote, ICasenoteRevision } from "../interfaces/records";
+import { ConsultedFor, ICasenote, ICasenoteRevision, IIcd10 } from "../interfaces/records";
 import { IUser, UserRole } from "../interfaces/user";
+import Icd10Descriptions from './icd10_codes';
 
 const RANDOM = {
     firstNames: ["Sarah", "Johnnie", "Wm", "Megan", "Lynn", "Andre", "Celia", "Delia", "Geoffrey", "Dora", "Fannie", "Colin", "Marlene", "Tammy", "Grady", "Lola", "Bonnie", "Luke", "Marta", "Russell", "Felix", "Kyle", "Ricardo", "Lois", "Vanessa", "Caleb", "Woodrow", "Joe", "Joel", "Christie", "Kevin", "April", "Ada", "Don", "Darnell", "Dixie", "Moses", "Guadalupe", "Marlon", "Bradley", "Blanca", "Esther", "Gail", "Laurie", "Amos", "Mitchell", "Joann", "Marsha", "Preston", "Jean", "Nick", "Antonia", "Carla", "Grant", "Shelia", "Natalie", "Sonya", "Christy", "Omar", "Jody", "Traci", "Judith", "Sherman", "Leroy", "Stacey", "Elmer", "Irene", "Guy", "Kerry", "Lawrence", "Hazel", "Karla", "Dianne", "Vincent", "Domingo", "Wilfred", "Dana", "Willie", "Misty", "Leslie", "Ken", "Lela", "Kelli", "Yvonne", "Orville", "Sonia", "Harriet", "Bernadette", "Jeannie", "Ted", "Mike", "Vivian", "Brooke", "Kara", "Zachary", "Evelyn", "Carl", "Cristina", "Candace", "Jerom"],
@@ -135,6 +136,9 @@ export default class Generator {
             }
         });
 
+        // create icd10 list
+        database.icd10 = this.randomIcd10Codes(30, 3);
+
         return database;
     }
 
@@ -142,8 +146,29 @@ export default class Generator {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    public static anyone<T>(items: T[]):T {
-        return items[this.random(0, items.length - 1)];
+    public static anyone<T>(source: T[]): T {
+        return source[this.random(0, source.length - 1)];
+    }
+
+    public static any<T>(source: T[], count: number = 1): T[] {
+        var result: T[] = [];
+
+        for (var i = 0; i < count; i++) {
+
+            result.push(this.anyone(source));
+        }
+
+        return result;
+    }
+
+    public static randomAlphabets(count: number = 1): string {
+        const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        return this.any(alpha, count).join('');
+    }
+
+    public static randomDigits(count: number = 1): string {
+        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        return this.any(digits, count).join('');
     }
 
     public static randomCasenote(episode: IEpisode): ICasenote | null{
@@ -285,19 +310,29 @@ export default class Generator {
         return `https://randomuser.me/api/portraits/${gender}/${id}.jpg`
     }
 
-    public static any<T>(source: T[], count: number): T[] {
-        var result:T[] = [];
+    public static randomIcd10Codes(count: number, maxLevel: number, parentId: number = 0, level: number = 0): IIcd10[] {
 
-        for (var i = 0; i < source.length; i++) {
+        const codes: IIcd10[] = [];
 
-        if (result.length >= count) break;
+        if (level < maxLevel) {
+            for (let i = 0; i < count; i++) {
+                const id = this.random(100000, 999999);
+                const icd10: IIcd10 = {
+                    "id": id,
+                    "parentId": parentId,
+                    "level": level,
+                    "code": `${this.randomAlphabets().toUpperCase()}${this.randomDigits(level + 1)}`,
+                    "desc": this.anyone(Icd10Descriptions),
+                }
 
-        var need = count - result.length;
-            if (Math.floor(Math.random() * (source.length - i - need)) === 0) {
-                result.push(source[i]);
+                codes.push(icd10);
+
+                const subcodes = this.randomIcd10Codes(this.random(10, 20), maxLevel, id, level + 1)
+
+                codes.push(...subcodes);
             }
         }
 
-        return result;
+        return codes;
     }
 }
