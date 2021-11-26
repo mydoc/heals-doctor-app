@@ -16,6 +16,13 @@ export interface IProvider {
     };
 }
 
+export interface IEligibility {
+    id: number,
+    providerId: number,
+    fieldName: number,
+    fieldValue: number
+}
+
 export interface IJourney {
     auth: boolean
     label: string,

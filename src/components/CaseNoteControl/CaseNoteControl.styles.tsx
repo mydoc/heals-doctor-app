@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    display: grid;
+    /* display: grid;
     grid-template-rows: min-content 1fr;
     height: 100%;
-    overflow: hidden;
+    overflow: hidden; */
 `;
 
 export const Content = styled.div`

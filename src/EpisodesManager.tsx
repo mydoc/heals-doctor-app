@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import Splitter from './components/Splitter/Splitter';
+import Splitter from './braincase/Form/Splitter/Splitter';
 import MenuBar from './components/MenuBar/MenuBar';
 import CasePanel from './components/CasePanel/CasePanel';
 import MenuLabel from './components/MenuLabel/MenuLabel';

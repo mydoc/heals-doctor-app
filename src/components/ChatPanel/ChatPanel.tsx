@@ -6,7 +6,7 @@ import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { User, UserRole } from '../../interfaces/user';
-import Panel from '../Panel/Panel';
+import Panel from '../../braincase/Form/Panel/Panel';
 import { Episode } from '../../interfaces/episode';
 
 interface ChatPanelProps {

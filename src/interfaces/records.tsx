@@ -10,6 +10,14 @@ export interface IMedicalCertificate {
     endDate: Date
 }
 
+export interface IIcd10 {
+    id: number,
+    parentId: number,
+    level: number,
+    code: string,
+    desc: string
+};
+
 export interface ICasenote {
     id: number,
     episodeId: number,

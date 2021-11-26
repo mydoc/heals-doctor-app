@@ -3,7 +3,7 @@ import { Episode } from "../../interfaces/episode";
 import { IUser } from "../../interfaces/user";
 import ChatCard from "../ChatCard/ChatCard";
 import PropertiesControl from "../PropertiesControl/PropertiesControl";
-import SlideOut from "../SlideOut/SlideOut";
+import SlideOut from "../../braincase/Form/SlideOut/SlideOut";
 import { Wrapper, Content, ContentEmpty } from "./ChatListControl.styles";
 
 

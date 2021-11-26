@@ -1,6 +1,6 @@
 import { IAppointment, IEpisode } from "./episode";
 import { IProvider } from "./provider";
-import { ICasenote, ICasenoteRevision, IMedicalCertificate, IPrescription, IReferral } from "./records";
+import { ICasenote, ICasenoteRevision, IIcd10, IMedicalCertificate, IPrescription, IReferral } from "./records";
 import { IUser } from "./user";
 
 export interface IDatabase {
@@ -13,4 +13,5 @@ export interface IDatabase {
     prescriptions: IPrescription[];
     referrals: IReferral[];
     medicalCertificates: IMedicalCertificate[];
+    icd10: IIcd10[];
 }
