@@ -16,7 +16,7 @@ import Generator from './utils/Generator';
 import AppointmentsPanel from './components/AppointmentsPanel/AppointmentsPanel';
 import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
-import { CDockForm, CDockLayoutItem, CDockManager, DockLayoutDirection } from './braincase/Form/DockPanelSuite/behavior';
+import { CDockForm, CDockLayoutItem, DockLayoutDirection, useDockManager } from './braincase/Form/DockPanelSuite/hooks';
 import DockManager from './braincase/Form/DockPanelSuite/DockManager';
 
 
@@ -27,13 +27,14 @@ const EpisodesManager = () => {
 
     // UI state
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
-    const [layout, setLayout] = useState<CDockLayoutItem>(CDockManager.createPanel([]));
 
     const {
         episodes, activeEpisode, appointments,
         addMessage, selectActiveEpisode
     } = useEpisodes(session);
     const [isBotChat, setIsBotChat] = useState(false);
+
+    const { layout, dockManager } = useDockManager();
 
     useEffect(() => {
 
@@ -60,8 +61,6 @@ const EpisodesManager = () => {
             }
         }
     }, [isBotChat, activeEpisode, session, addMessage]);
-
-
 
     const handleSendMessage = (message: string) => {
         if (session && activeEpisode) {
@@ -100,33 +99,33 @@ const EpisodesManager = () => {
     // )
 
     useEffect(() => {
-        const apptForm = CDockManager.createForm('Appointment');
-        const chatForm = CDockManager.createForm('Chat');
-        const episodesForm = CDockManager.createForm('Episodes');
-        const caseForm = CDockManager.createForm('Case');
-        const profileForm = CDockManager.createForm('Profile')
+        const apptForm = dockManager.createForm('Appointment');
+        const chatForm = dockManager.createForm('Chat');
+        const episodesForm = dockManager.createForm('Episodes');
+        const caseForm = dockManager.createForm('Case');
+        const profileForm = dockManager.createForm('Profile')
 
-        const apptPanel = CDockManager.createPanel([apptForm]);
-        const chatPanel = CDockManager.createPanel([chatForm]);
-        const episodesPanel = CDockManager.createPanel([episodesForm]);
-        const casePanel = CDockManager.createPanel([caseForm]);
-        const profilePanel = CDockManager.createPanel([profileForm]);
+        const apptPanel = dockManager.createPanel([apptForm]);
+        const chatPanel = dockManager.createPanel([chatForm]);
+        const episodesPanel = dockManager.createPanel([episodesForm]);
+        const casePanel = dockManager.createPanel([caseForm]);
+        const profilePanel = dockManager.createPanel([profileForm]);
 
-        const bottomLeft = CDockManager.createSplitter(apptPanel, profilePanel, DockLayoutDirection.Vertical);
-        const left = CDockManager.createSplitter(episodesPanel, bottomLeft, DockLayoutDirection.Vertical);
-        const right = CDockManager.createSplitter(chatPanel, casePanel);
-        const root = CDockManager.createSplitter(left, right);
+        const bottomLeft = dockManager.createSplitter(apptPanel, profilePanel, DockLayoutDirection.Vertical);
+        const left = dockManager.createSplitter(episodesPanel, bottomLeft, DockLayoutDirection.Vertical);
+        const right = dockManager.createSplitter(chatPanel, casePanel);
+        const root = dockManager.createSplitter(left, right);
 
-        setLayout(root);
-    }, [])
+        dockManager.setLayout(root);
+    }, []);
 
     const onStacking = (source: string, dest: string): boolean => {
-        setLayout(prev => { return { ...CDockManager.dockForm(prev!, source, dest) } });
+        dockManager.stack(source, dest);
         return true;
     }
 
     const onSplitting = (source: string, dest: string, direction: DockLayoutDirection): boolean => {
-        setLayout(prev => { return { ...CDockManager.splitPanel(prev!, source, dest, direction) } });
+        dockManager.split(source, dest, direction);
         return true;
     }
 

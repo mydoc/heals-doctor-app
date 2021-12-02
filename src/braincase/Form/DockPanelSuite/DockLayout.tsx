@@ -1,22 +1,19 @@
 import DockPanel from "./DockPanel";
 import styled from 'styled-components';
-import { CDockLayoutItem, DockLayoutItemType, CDockPanel, CDockSplitter, DockLayoutDirection, Movable, CDockForm, Point } from "./behavior";
+import { CDockLayoutItem, DockLayoutItemType, CDockPanel, CDockSplitter, DockLayoutDirection, Movable, CDockForm, Point } from "./hooks";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 
-const Wrapper = styled.div<{ direction: DockLayoutDirection }>`
+const Wrapper = styled.div`
     display: flex;
-    flex-direction: ${props => props.direction === DockLayoutDirection.Vertical ? `column` : `row` };
-
     position: absolute;
     width: 100%;
     height: 100%;
 `;
 
-const Separator = styled.div<{ direction: DockLayoutDirection }>`
+const Separator = styled.div`
     background-color: #304261;
     flex: 0 0 4px;
-    cursor: ${props => props.direction === DockLayoutDirection.Vertical ? `row-resize` : `col-resize`};
 `
 const Primary = styled.div`
     position: relative;
@@ -65,7 +62,6 @@ const DockLayout = ({ layout, onStacking, onSplitting, onRenderForm }
             totalSize = splitterRect.height;
             splitterSize = separatorRect.height;
             offset = clientPosition.y - splitterRect.top;
-            console.log('vert', totalSize, splitterSize, offset);
         } else {
             totalSize = splitterRect.width;
             splitterSize = separatorRect.width;
@@ -138,12 +134,30 @@ const DockLayout = ({ layout, onStacking, onSplitting, onRenderForm }
         }
     }
 
+    const getSeparatorStyle = (direction: DockLayoutDirection) => {
+
+        if (direction === DockLayoutDirection.Vertical) {
+            return { cursor: 'row-resize' };
+        } else {
+            return { cursor: 'col-resize' };
+        }
+    }
+
+    const getWrapperStyle = (direction: DockLayoutDirection) => {
+
+        if (direction === DockLayoutDirection.Vertical) {
+            return { flexDirection: 'column' as 'column' };
+        } else {
+            return { flexDirection: 'row' as 'row' };
+        }
+    }
+
     const renderSplitter = () => (
         <>
             <Primary className="dock-layout-primary">
                 <DockLayout layout={splitter.primary} onStacking={onStacking} onSplitting={onSplitting} onRenderForm={onRenderForm} />
             </Primary>
-            <Separator className="separator" direction={splitter.direction} ref={separatorRef}
+            <Separator className="separator" style={getSeparatorStyle(splitter.direction)} ref={separatorRef}
                 onMouseDown={(e) => movable.onMouseDown(e.nativeEvent)}
                 onTouchStart={(e) => movable.onTouchStart(e.nativeEvent)}
             />
@@ -160,7 +174,7 @@ const DockLayout = ({ layout, onStacking, onSplitting, onRenderForm }
     )
 
     return (
-        <Wrapper direction={splitter?.direction} className={layout.id} ref={splitterRef}>
+        <Wrapper style={getWrapperStyle(splitter.direction)} className={layout.id} ref={splitterRef}>
             {isSplitter ? renderSplitter() : renderPanel()}
         </Wrapper>
     );

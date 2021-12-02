@@ -1,7 +1,7 @@
 import { ReactNode, useRef, useState } from "react";
 import DockForm from "./DockForm";
 import styled from 'styled-components';
-import { CDockForm, CDockManager, CDockPanel, DockLayoutDirection, DragDropable } from "./behavior";
+import { CDockForm, CDockPanel, DockLayoutDirection, DragDropable } from "./hooks";
 
 
 const NoContent = styled.div`
@@ -75,12 +75,12 @@ const DockPanel = ({ panel, onStacking, onSplitting, onRenderForm }
     const dragDrop = new DragDropable();
 
     const handleStacking = (e: DragEvent, source: string): boolean => {
-        setActiveForm(prev => Math.min(panel.forms.length - 1, activeForm));
+        setActiveForm(prev => Math.min(panel.forms.length - 1, prev));
         return onStacking(source, panel.id);
     }
 
     const handleSplitting = (e: DragEvent, source: string): boolean => {
-        setActiveForm(prev => Math.min(panel.forms.length - 1, activeForm));
+        setActiveForm(prev => Math.min(panel.forms.length - 1, prev));
         // check which side the mouse is close to
         const destination = panelRef.current;
         let direction = DockLayoutDirection.Horizontal

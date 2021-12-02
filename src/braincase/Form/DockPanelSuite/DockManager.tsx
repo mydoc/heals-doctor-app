@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import { CDockForm, CDockLayoutItem, DockLayoutDirection } from './behavior';
+import { CDockForm, CDockLayoutItem, DockLayoutDirection } from './hooks';
 import DockLayout from './DockLayout';
 
 export const Wrapper = styled.div`

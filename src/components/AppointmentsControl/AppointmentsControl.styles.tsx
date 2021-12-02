@@ -26,7 +26,7 @@ export const NowMarker = styled.div<{position: number}>`
     &.timeline {
         position: absolute;
         width: 100%;
-        top: ${props => `${props.position}px`};
+        //${props => `top: ${props.position}px`};
         height: 2px;
         background-color: #2885FF;
     }
