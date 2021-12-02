@@ -16,8 +16,10 @@ import Generator from './utils/Generator';
 import AppointmentsPanel from './components/AppointmentsPanel/AppointmentsPanel';
 import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
-import DockManager from './braincase/Form/DockPanelSuite/DockManager/DockManager';
-import { CDockLayoutItem, CDockManager, DockLayoutDirection } from './braincase/Form/DockPanelSuite/behavior';
+import { CDockForm, CDockLayoutItem, CDockManager, DockLayoutDirection } from './braincase/Form/DockPanelSuite/behavior';
+import DockManager from './braincase/Form/DockPanelSuite/DockManager';
+
+
 
 const EpisodesManager = () => {
 
@@ -25,6 +27,7 @@ const EpisodesManager = () => {
 
     // UI state
     const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+    const [layout, setLayout] = useState<CDockLayoutItem>(CDockManager.createPanel([]));
 
     const {
         episodes, activeEpisode, appointments,
@@ -96,31 +99,12 @@ const EpisodesManager = () => {
     //     </Splitter>
     // )
 
-
-
-
-
-
-
-    const [layout, setLayout] = useState<CDockLayoutItem>(CDockManager.createPanel([]));
     useEffect(() => {
-        const apptForm = CDockManager.createForm('Appointment', <AppointmentsPanel appointments={appointments} />);
-        const chatForm = CDockManager.createForm('Chat', <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />);
-        const episodesForm = CDockManager.createForm('Episodes', <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />);
-        const caseForm = CDockManager.createForm('Case', <CasePanel episode={activeEpisode} />);
-        const profileForm = CDockManager.createForm('Profile', (
-            <div>
-                <MenuBar>
-                    <VideoCameraFrontIcon /><MenuLabel>{`${session?.firstName} ${session?.lastName}`}</MenuLabel>
-                    <div className="align-right"><IconButton id="expand-menu-system" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
-                </MenuBar>
-                <Menu id="expand-menu-system" anchorEl={anchor} open={anchor?.id === "expand-menu-system"} onClose={() => setAnchor(null)}>
-                    <MenuItem onClick={() => { }}>Profile</MenuItem>
-                    <Divider />
-                    <MenuItem onClick={() => { }}>Log Out</MenuItem>
-                </Menu>
-            </div>
-        ))
+        const apptForm = CDockManager.createForm('Appointment');
+        const chatForm = CDockManager.createForm('Chat');
+        const episodesForm = CDockManager.createForm('Episodes');
+        const caseForm = CDockManager.createForm('Case');
+        const profileForm = CDockManager.createForm('Profile')
 
         const apptPanel = CDockManager.createPanel([apptForm]);
         const chatPanel = CDockManager.createPanel([chatForm]);
@@ -134,14 +118,50 @@ const EpisodesManager = () => {
         const root = CDockManager.createSplitter(left, right);
 
         setLayout(root);
-    }, [appointments, activeEpisode, episodes, session, anchor])
+    }, [])
 
-    const handleLayout = (source: string, dest: string) => {
-        setLayout(prev => {return { ...CDockManager.moveForm(prev, source, dest) }});
+    const onStacking = (source: string, dest: string): boolean => {
+        setLayout(prev => { return { ...CDockManager.dockForm(prev!, source, dest) } });
+        return true;
+    }
+
+    const onSplitting = (source: string, dest: string, direction: DockLayoutDirection): boolean => {
+        setLayout(prev => { return { ...CDockManager.splitPanel(prev!, source, dest, direction) } });
+        return true;
+    }
+
+    const onRenderForm = (form: CDockForm) => {
+
+        switch (form.title) {
+            case 'Appointment':
+                return <AppointmentsPanel appointments={appointments} />;
+            case 'Chat':
+                return <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
+            case 'Episodes':
+                return <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />
+            case 'Case':
+                return <CasePanel episode={activeEpisode} />;
+            case 'Profile':
+                return (
+                    <div>
+                        <MenuBar>
+                            <VideoCameraFrontIcon /><MenuLabel>{`${session?.firstName} ${session?.lastName}`}</MenuLabel>
+                            <div className="align-right"><IconButton id="expand-menu-system" onClick={(e: React.MouseEvent<HTMLButtonElement>) => setAnchor(e.currentTarget)}><MenuIcon /></IconButton></div>
+                        </MenuBar>
+                        <Menu id="expand-menu-system" anchorEl={anchor} open={anchor?.id === "expand-menu-system"} onClose={() => setAnchor(null)}>
+                            <MenuItem onClick={() => { }}>Profile</MenuItem>
+                            <Divider />
+                            <MenuItem onClick={() => { }}>Log Out</MenuItem>
+                        </Menu>
+                    </div>
+                );
+            default:
+                return <div>Unknown Form</div>
+        }
     }
 
     return (
-        <DockManager onLayout={handleLayout} layout={layout} />
+        <DockManager onStacking={onStacking} onSplitting={onSplitting} layout={layout} onRenderForm={onRenderForm} />
     )
 }
 
