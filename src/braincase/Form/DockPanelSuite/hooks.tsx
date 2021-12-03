@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useRef, useState } from "react";
 
 export class Point {
     constructor(public x: number, public y: number) {
@@ -164,7 +164,18 @@ export class CDockPanel extends CDockLayoutItem {
     }
 }
 
-export const useDockManager = () => {
+export interface IDockManager {
+    layout: CDockLayoutItem
+    setLayout: Dispatch<SetStateAction<CDockLayoutItem>>,
+    clone: (layout: CDockLayoutItem) => CDockLayoutItem,
+    createForm: (title: string, children?: ReactNode, icon?: ReactNode) => CDockForm
+    createPanel: (forms: CDockForm[]) => CDockPanel
+    createSplitter: (primary: CDockLayoutItem, secondary: CDockLayoutItem, direction?: DockLayoutDirection, size?: number) => CDockSplitter,
+    stack: (formId: string, panelId: string) => void,
+    split: (formId: string, destPanelId: string, direction: DockLayoutDirection) => void
+}
+
+export const useDockManager = (): IDockManager => {
 
     const counter = useRef(0);
 
@@ -356,8 +367,6 @@ export const useDockManager = () => {
     }
 
     return {
-        layout, dockManager: {
-            setLayout, clone, createForm, createPanel, createSplitter, stack, split
-        }
+        layout, setLayout, clone, createForm, createPanel, createSplitter, stack, split
     }
 }

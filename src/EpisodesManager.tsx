@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from 'react';
-import Splitter from './braincase/Form/Splitter/Splitter';
 import MenuBar from './components/MenuBar/MenuBar';
 import CasePanel from './components/CasePanel/CasePanel';
 import MenuLabel from './components/MenuLabel/MenuLabel';
@@ -34,7 +33,7 @@ const EpisodesManager = () => {
     } = useEpisodes(session);
     const [isBotChat, setIsBotChat] = useState(false);
 
-    const { layout, dockManager } = useDockManager();
+    const dockManager = useDockManager();
 
     useEffect(() => {
 
@@ -82,22 +81,6 @@ const EpisodesManager = () => {
         selectActiveEpisode(episode);
     }
 
-    // return (
-    //     <Splitter primaryIndex={1} secondaryInitialSize={300} secondaryMinSize={50}>
-    //         <Splitter vertical primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={20} percentage={true}>
-    //             <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />
-    //             <Splitter vertical enabled={true} primaryIndex={0} secondaryInitialSize={50} secondaryMinSize={50}>
-    //                 <AppointmentsPanel appointments={appointments} />
-    //
-    //             </Splitter>
-    //         </Splitter>
-    //         <Splitter primaryIndex={1} secondaryInitialSize={50} secondaryMinSize={30} percentage={true}>
-    //             <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
-    //             <CasePanel episode={activeEpisode} />
-    //         </Splitter>
-    //     </Splitter>
-    // )
-
     useEffect(() => {
         const apptForm = dockManager.createForm('Appointment');
         const chatForm = dockManager.createForm('Chat');
@@ -119,21 +102,11 @@ const EpisodesManager = () => {
         dockManager.setLayout(root);
     }, []);
 
-    const onStacking = (source: string, dest: string): boolean => {
-        dockManager.stack(source, dest);
-        return true;
-    }
-
-    const onSplitting = (source: string, dest: string, direction: DockLayoutDirection): boolean => {
-        dockManager.split(source, dest, direction);
-        return true;
-    }
-
     const onRenderForm = (form: CDockForm) => {
 
         switch (form.title) {
-            case 'Appointment':
-                return <AppointmentsPanel appointments={appointments} />;
+            // case 'Appointment':
+            //     return <AppointmentsPanel appointments={appointments} />;
             case 'Chat':
                 return <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
             case 'Episodes':
@@ -160,7 +133,7 @@ const EpisodesManager = () => {
     }
 
     return (
-        <DockManager onStacking={onStacking} onSplitting={onSplitting} layout={layout} onRenderForm={onRenderForm} />
+        <DockManager dockManager={dockManager} onRenderForm={onRenderForm} />
     )
 }
 
