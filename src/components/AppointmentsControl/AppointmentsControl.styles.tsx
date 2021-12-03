@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 import { AppointmentStatus } from '../../interfaces/episode';
 
-export const Wrapper = styled.div <{ height: number}>`
-
-    &.stack {
-
-    }
+export const Wrapper = styled.div`
 
     &.timeline {
         position: relative;
-        height: ${props => `${props.height}px`};
         overflow: hidden;
 
         background: repeating-linear-gradient(
@@ -21,20 +16,7 @@ export const Wrapper = styled.div <{ height: number}>`
     }
 `;
 
-export const NowMarker = styled.div<{position: number}>`
-
-    &.timeline {
-        position: absolute;
-        width: 100%;
-        //${props => `top: ${props.position}px`};
-        height: 2px;
-        background-color: #2885FF;
-    }
-
-    &.stacked {
-        display: none;
-    }
-`
+export const NowMarker = styled.div``
 
 export const Card = styled.div<{ status: AppointmentStatus, start: number, duration: number}>`
 

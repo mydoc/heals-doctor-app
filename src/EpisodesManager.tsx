@@ -17,6 +17,8 @@ import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 import { CDockForm, CDockLayoutItem, DockLayoutDirection, useDockManager } from './braincase/Form/DockPanelSuite/hooks';
 import DockManager from './braincase/Form/DockPanelSuite/DockManager';
+import PropertiesControl from './components/PropertiesControl/PropertiesControl';
+import useEventListener from './hooks/useEventListener';
 
 
 
@@ -81,16 +83,26 @@ const EpisodesManager = () => {
         selectActiveEpisode(episode);
     }
 
+    //const [showAppBar, setShowAppBar] = useState(true);
+    const handleToggleAppBar = ({ key }: any) => {
+        const F9_KEYS = ['120', 'F9'];
+        if (F9_KEYS.includes(String(key))) {
+            console.log(dockManager.layout);
+        }
+    }
+    useEventListener('keydown', handleToggleAppBar);
+
     useEffect(() => {
         const apptForm = dockManager.createForm('Appointment');
         const chatForm = dockManager.createForm('Chat');
         const episodesForm = dockManager.createForm('Episodes');
         const caseForm = dockManager.createForm('Case');
         const profileForm = dockManager.createForm('Profile')
+        const propertiesForm = dockManager.createForm('Properties')
 
         const apptPanel = dockManager.createPanel([apptForm]);
         const chatPanel = dockManager.createPanel([chatForm]);
-        const episodesPanel = dockManager.createPanel([episodesForm]);
+        const episodesPanel = dockManager.createPanel([episodesForm, propertiesForm]);
         const casePanel = dockManager.createPanel([caseForm]);
         const profilePanel = dockManager.createPanel([profileForm]);
 
@@ -105,8 +117,10 @@ const EpisodesManager = () => {
     const onRenderForm = (form: CDockForm) => {
 
         switch (form.title) {
-            // case 'Appointment':
-            //     return <AppointmentsPanel appointments={appointments} />;
+            case 'Properties':
+                return <PropertiesControl instance={activeEpisode} />
+            case 'Appointment':
+                return <AppointmentsPanel appointments={appointments} />;
             case 'Chat':
                 return <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
             case 'Episodes':

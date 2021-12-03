@@ -9,8 +9,6 @@ import EpisodesManager from './EpisodesManager';
 import Generator from './utils/Generator';
 
 
-// const F9_KEYS = ['120', 'F9'];
-
 function App() {
 
   // data state
@@ -21,14 +19,6 @@ function App() {
     const doctor = data.users.find((user) => user.username === 'doctor')!;
     setSession(doctor);
   }
-
-  // const [showAppBar, setShowAppBar] = useState(true);
-  // const handleToggleAppBar = ({ key }: any) => {
-  //   if (F9_KEYS.includes(String(key))) {
-  //     setShowAppBar(prev => !prev);
-  //   }
-  // }
-  // useEventListener('keydown', handleToggleAppBar);
 
   if (!session) return (<button onClick={handleLogIn}>Login</button>)
 

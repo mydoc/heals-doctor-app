@@ -150,7 +150,7 @@ export class CDockSplitter extends CDockLayoutItem {
         public id: string,
         public primary: CDockLayoutItem,
         public secondary: CDockLayoutItem,
-        public direction: DockLayoutDirection = DockLayoutDirection.Horizontal,
+        public direction: DockLayoutDirection,
         public size: number
     ) {
         super(id, DockLayoutItemType.Splitter);
@@ -195,7 +195,7 @@ export const useDockManager = (): IDockManager => {
         return new CDockPanel(_hash('dmp'), forms);
     }
 
-    const createSplitter = (primary: CDockLayoutItem, secondary: CDockLayoutItem, direction: DockLayoutDirection = DockLayoutDirection.Horizontal, size: number = 20) => {
+    const createSplitter = (primary: CDockLayoutItem, secondary: CDockLayoutItem, direction: DockLayoutDirection = DockLayoutDirection.Horizontal, size: number = 50) => {
         return new CDockSplitter(_hash('dms'), primary, secondary, direction, size);
     }
 

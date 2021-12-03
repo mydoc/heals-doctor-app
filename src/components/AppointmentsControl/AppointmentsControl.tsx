@@ -29,8 +29,28 @@ const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlPr
         }
     }
 
+    const getWrapperStyle = (view: 'stacked' | 'timeline', height: number) => {
+        if (view == 'timeline') {
+            return { height: `${height}px` };
+        }
+    }
+
+    const getStyleNowMarker = (view: 'stacked' | 'timeline', position: number) => {
+        if (view === 'stacked') {
+            return { display: 'none' as 'none' };
+        } else {
+            return {
+                position: 'absolute' as 'absolute',
+                width: '100%',
+                top: `${position}px`,
+                height: '2px',
+                backgroundColor: '#2885FF',
+            }
+        }
+    }
+
     return (
-        <Wrapper height={timelineHeight} className={view}>
+        <Wrapper style={getWrapperStyle(view, timelineHeight)} className={view}>
             {sortedAppointments?.map(appt => {
                 const { start, duration } = onPositioning(appt);
                 return (
@@ -52,7 +72,7 @@ const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlPr
                     </Card>
                 )
             })}
-            <NowMarker position={nowMarkerPos} className={view} />
+            <NowMarker style={getStyleNowMarker(view, nowMarkerPos)} className="dsad" />
         </Wrapper>
     );
 }
