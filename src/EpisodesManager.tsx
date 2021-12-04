@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import MenuBar from './components/MenuBar/MenuBar';
 import CasePanel from './components/CasePanel/CasePanel';
 import MenuLabel from './components/MenuLabel/MenuLabel';
@@ -32,6 +32,7 @@ const EpisodesManager = () => {
     } = useEpisodes(session);
     const [isBotChat, setIsBotChat] = useState(false);
 
+    const isInit = useRef(false);
     const dockManager = useDockManager();
 
     useEffect(() => {
@@ -90,26 +91,29 @@ const EpisodesManager = () => {
     useEventListener('keydown', handleToggleAppBar);
 
     useEffect(() => {
-        const apptForm = dockManager.createForm('Appointment');
-        const chatForm = dockManager.createForm('Chat');
-        const episodesForm = dockManager.createForm('Episodes');
-        const caseForm = dockManager.createForm('Case');
-        const profileForm = dockManager.createForm('Profile')
-        const propertiesForm = dockManager.createForm('Properties')
+        if (!isInit.current) {
+            const apptForm = dockManager.createForm('Appointment');
+            const chatForm = dockManager.createForm('Chat');
+            const episodesForm = dockManager.createForm('Episodes');
+            const caseForm = dockManager.createForm('Case');
+            const profileForm = dockManager.createForm('Profile')
+            const propertiesForm = dockManager.createForm('Properties')
 
-        const apptPanel = dockManager.createPanel([apptForm]);
-        const chatPanel = dockManager.createPanel([chatForm]);
-        const episodesPanel = dockManager.createPanel([episodesForm, propertiesForm]);
-        const casePanel = dockManager.createPanel([caseForm]);
-        const profilePanel = dockManager.createPanel([profileForm]);
+            const apptPanel = dockManager.createPanel([apptForm]);
+            const chatPanel = dockManager.createPanel([chatForm]);
+            const episodesPanel = dockManager.createPanel([episodesForm, propertiesForm]);
+            const casePanel = dockManager.createPanel([caseForm]);
+            const profilePanel = dockManager.createPanel([profileForm]);
 
-        const bottomLeft = dockManager.createSplitter(apptPanel, profilePanel, DockLayoutDirection.Vertical);
-        const left = dockManager.createSplitter(episodesPanel, bottomLeft, DockLayoutDirection.Vertical);
-        const right = dockManager.createSplitter(chatPanel, casePanel);
-        const root = dockManager.createSplitter(left, right);
+            const bottomLeft = dockManager.createSplitter(apptPanel, profilePanel, DockLayoutDirection.Vertical);
+            const left = dockManager.createSplitter(episodesPanel, bottomLeft, DockLayoutDirection.Vertical);
+            const right = dockManager.createSplitter(chatPanel, casePanel);
+            const root = dockManager.createSplitter(left, right);
 
-        dockManager.setLayout(root);
-    }, []);
+            dockManager.setLayout(root);
+            isInit.current = true;
+        }
+    }, [dockManager]);
 
     const onRenderForm = (form: CDockForm) => {
 

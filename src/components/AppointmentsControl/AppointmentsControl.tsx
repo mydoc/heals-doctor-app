@@ -30,7 +30,7 @@ const AppointmentsControl = ({ sortedAppointments, view }: AppointmentsControlPr
     }
 
     const getWrapperStyle = (view: 'stacked' | 'timeline', height: number) => {
-        if (view == 'timeline') {
+        if (view === 'timeline') {
             return { height: `${height}px` };
         }
     }
