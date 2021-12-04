@@ -7,7 +7,7 @@ import { useState } from "react";
 import Icd10Form from "../Icd10Form";
 import { IIcd10 } from "../../../interfaces/records";
 import ClearIcon from '@mui/icons-material/Clear';
-import { Icd10Item } from "./CaseNoteForm.styles";
+import { Icd10Item } from "./CaseNoteForm.styles"; // fix filename
 
 interface CasenoteFormProps {
     patient: User;
