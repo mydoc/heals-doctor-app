@@ -2161,7 +2161,7 @@
   "resolved" "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz"
   "version" "2.0.1"
 
-"@types/styled-components@^5.1.14", "@types/styled-components@^5.1.15":
+"@types/styled-components@^5.1.14", "@types/styled-components@^5.1.15", "@types/styled-components@>=5":
   "integrity" "sha512-4evch8BRI3AKgb0GAZ/sn+mSeB+Dq7meYtMi7J/0Mg98Dt1+r8fySOek7Sjw1W+Wskyjc93565o5xWAT/FdY0Q=="
   "resolved" "https://registry.npmjs.org/@types/styled-components/-/styled-components-5.1.15.tgz"
   "version" "5.1.15"
@@ -4554,6 +4554,11 @@
   "version" "2.0.2"
   dependencies:
     "buffer-indexof" "^1.0.0"
+
+"dock-panel-suite@^0.1.1":
+  "integrity" "sha512-XheUI0J+dPfYcQb0xxeSj/ziJkfZqdEeZZkvMH7JkCkGg+haTglBKmnLTEup0C31LLp1E086CTq26KYMfQxWTQ=="
+  "resolved" "https://registry.npmjs.org/dock-panel-suite/-/dock-panel-suite-0.1.1.tgz"
+  "version" "0.1.1"
 
 "dockpanel@github:jakesee/dockpanel":
   "resolved" "git+ssh://git@github.com/jakesee/dockpanel.git#5610059642a99cecaf5781d7ad1781e37a7a1b8b"
@@ -9586,7 +9591,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^17.0.2", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
+"react-dom@*", "react-dom@^17.0.2", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@>=16.8", "react-dom@>=17":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -9711,7 +9716,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^17.0.2", "react@>= 16", "react@>= 16.8.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@17.0.2":
+"react@*", "react@^17.0.2", "react@>= 16", "react@>= 16.8.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=17", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -10932,7 +10937,7 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^2.7.0"
 
-"styled-components@^5.3.1", "styled-components@^5.3.3", "styled-components@>= 2":
+"styled-components@^5.3.1", "styled-components@^5.3.3", "styled-components@>= 2", "styled-components@>=5":
   "integrity" "sha512-++4iHwBM7ZN+x6DtPPWkCI4vdtwumQ+inA/DdAsqYd4SVgUKJie5vXyzotA00ttcFdQkCng7zc6grwlfIfw+lw=="
   "resolved" "https://registry.npmjs.org/styled-components/-/styled-components-5.3.3.tgz"
   "version" "5.3.3"

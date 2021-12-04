@@ -15,12 +15,9 @@ import Generator from './utils/Generator';
 import AppointmentsPanel from './components/AppointmentsPanel/AppointmentsPanel';
 import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
-import { CDockForm, CDockLayoutItem, DockLayoutDirection, useDockManager } from './braincase/Form/DockPanelSuite/hooks';
-import DockManager from './braincase/Form/DockPanelSuite/DockManager';
 import PropertiesControl from './components/PropertiesControl/PropertiesControl';
 import useEventListener from './hooks/useEventListener';
-
-
+import { DockManager, useDockManager, CDockForm, DockLayoutDirection } from 'dock-panel-suite';
 
 const EpisodesManager = () => {
 
@@ -147,7 +144,7 @@ const EpisodesManager = () => {
     }
 
     return (
-        <DockManager dockManager={dockManager} onRenderForm={onRenderForm} />
+        <DockManager manager={dockManager} onRenderForm={onRenderForm} />
     )
 }
 
