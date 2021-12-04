@@ -1,6 +1,6 @@
 import { User } from "../../interfaces/user";
-import CasenoteForm from "../Form/CasenoteForm/CasenoteForm";
-import { Content, Wrapper } from './CasenoteControl.styles'
+import CaseNoteForm from "../Form/CaseNoteForm/CaseNoteForm";
+import { Content, Wrapper } from './CaseNoteControl.styles'
 
 interface CaseNoteControlProps {
     patient: User
@@ -10,7 +10,7 @@ const CasenoteControl = ({ patient }: CaseNoteControlProps) => {
     return (
         <Wrapper>
             <Content>
-                <CasenoteForm patient={patient} onSubmit={() => { } } onCancel={() => { }}/>
+                <CaseNoteForm patient={patient} onSubmit={() => { } } onCancel={() => { }}/>
             </Content>
         </Wrapper>
     );

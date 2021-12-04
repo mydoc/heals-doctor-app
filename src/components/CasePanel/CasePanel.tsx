@@ -5,7 +5,7 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import MenuIcon from '@mui/icons-material/Menu';
 import Panel from '../../braincase/Form/Panel/Panel';
-import CasenoteControl from '../CasenoteControl/CasenoteControl';
+import CasenoteControl from '../CaseNoteControl/CaseNoteControl';
 import { UserRole } from '../../interfaces/user';
 import { Episode, EpisodeType } from '../../interfaces/episode';
 import PatientControl from '../PatientControl/PatientControl';

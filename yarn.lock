@@ -1264,7 +1264,7 @@
   "resolved" "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.4.tgz"
   "version" "0.7.4"
 
-"@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.4.1", "@emotion/react@^11.5.0", "@emotion/react@^11.7.0":
+"@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.4.1", "@emotion/react@^11.5.0":
   "integrity" "sha512-WL93hf9+/2s3cA1JVJlz8+Uy6p6QWukqQFOm2OZO5ki51hfucHMOmbSjiyC3t2Y4RI8XUmBoepoc/24ny/VBbA=="
   "resolved" "https://registry.npmjs.org/@emotion/react/-/react-11.7.0.tgz"
   "version" "11.7.0"
@@ -1293,7 +1293,7 @@
   "resolved" "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.1.0.tgz"
   "version" "1.1.0"
 
-"@emotion/styled@^11.3.0", "@emotion/styled@^11.6.0":
+"@emotion/styled@^11.3.0":
   "integrity" "sha512-mxVtVyIOTmCAkFbwIp+nCjTXJNgcz4VWkOYQro87jE2QBTydnkiYusMrRGFtzuruiGK4dDaNORk4gH049iiQuw=="
   "resolved" "https://registry.npmjs.org/@emotion/styled/-/styled-11.6.0.tgz"
   "version" "11.6.0"
@@ -1590,14 +1590,14 @@
     "prop-types" "^15.7.2"
     "react-is" "^17.0.2"
 
-"@mui/icons-material@^5.0.5", "@mui/icons-material@^5.2.0":
+"@mui/icons-material@^5.0.5":
   "integrity" "sha512-NvyrVaGKpP4R1yFw8BCnE0QcsQ67RtpgxPr4FtH8q60MDYPuPVczLOn5Ash5CFavoDWur/NfM/4DpT54yf3InA=="
   "resolved" "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.2.0.tgz"
   "version" "5.2.0"
   dependencies:
     "@babel/runtime" "^7.16.3"
 
-"@mui/material@^5.0.0", "@mui/material@^5.0.6", "@mui/material@^5.2.1":
+"@mui/material@^5.0.0", "@mui/material@^5.0.6":
   "integrity" "sha512-vqmZq+v59CT4V84WcvYkYldnjC6uRddYx0TJqgl2h5YRbbPYCGVVywVvg9cBwxy4j5xI3F2WH6z7WGkHqkJIQA=="
   "resolved" "https://registry.npmjs.org/@mui/material/-/material-5.2.2.tgz"
   "version" "5.2.2"
@@ -4559,28 +4559,6 @@
   "integrity" "sha512-XheUI0J+dPfYcQb0xxeSj/ziJkfZqdEeZZkvMH7JkCkGg+haTglBKmnLTEup0C31LLp1E086CTq26KYMfQxWTQ=="
   "resolved" "https://registry.npmjs.org/dock-panel-suite/-/dock-panel-suite-0.1.1.tgz"
   "version" "0.1.1"
-
-"dockpanel@github:jakesee/dockpanel":
-  "resolved" "git+ssh://git@github.com/jakesee/dockpanel.git#5610059642a99cecaf5781d7ad1781e37a7a1b8b"
-  "version" "0.1.0"
-  dependencies:
-    "@emotion/react" "^11.7.0"
-    "@emotion/styled" "^11.6.0"
-    "@mui/icons-material" "^5.2.0"
-    "@mui/material" "^5.2.1"
-    "@testing-library/jest-dom" "^5.11.4"
-    "@testing-library/react" "^11.1.0"
-    "@testing-library/user-event" "^12.1.10"
-    "@types/jest" "^26.0.15"
-    "@types/node" "^12.0.0"
-    "@types/react" "^17.0.0"
-    "@types/react-dom" "^17.0.0"
-    "react" "^17.0.2"
-    "react-dom" "^17.0.2"
-    "react-scripts" "4.0.3"
-    "styled-components" "^5.3.3"
-    "typescript" "^4.1.2"
-    "web-vitals" "^1.0.1"
 
 "doctrine@^2.1.0":
   "integrity" "sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw=="
