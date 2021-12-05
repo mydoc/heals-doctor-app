@@ -17,7 +17,7 @@ import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 import PropertiesControl from './components/PropertiesControl/PropertiesControl';
 import useEventListener from './hooks/useEventListener';
-import { DockManager, useDockManager, CDockForm } from 'dock-panel-suite';
+import { CDockForm, DockManager, useDockManager } from '@jakesee/react-dockpanel';
 
 const EpisodesManager = () => {
 
