@@ -17,7 +17,7 @@ import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 import PropertiesControl from './components/PropertiesControl/PropertiesControl';
 import useEventListener from './hooks/useEventListener';
-import { DockManager, useDockManager, CDockForm, DockLayoutDirection } from 'dock-panel-suite';
+import { DockManager, useDockManager, CDockForm } from 'dock-panel-suite';
 
 const EpisodesManager = () => {
 
@@ -105,8 +105,8 @@ const EpisodesManager = () => {
             const casePanel = dockManager.createPanel([caseForm]);
             const profilePanel = dockManager.createPanel([profileForm]);
 
-            const bottomLeft = dockManager.createSplitter(apptPanel, profilePanel, DockLayoutDirection.Vertical);
-            const left = dockManager.createSplitter(episodesPanel, bottomLeft, DockLayoutDirection.Vertical);
+            const bottomLeft = dockManager.createSplitter(apptPanel, profilePanel, true);
+            const left = dockManager.createSplitter(episodesPanel, bottomLeft, true);
             const right = dockManager.createSplitter(chatPanel, casePanel);
             const root = dockManager.createSplitter(left, right);
 
