@@ -6,6 +6,7 @@ import ChatPanel from './components/ChatPanel/ChatPanel';
 import EpisodesPanel from './components/EpisodesPanel/EpisodesPanel';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import MenuIcon from '@mui/icons-material/Menu';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 
 import { DataContext } from './contexts/DataContext';
@@ -17,7 +18,8 @@ import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 import PropertiesControl from './components/PropertiesControl/PropertiesControl';
 import useEventListener from './hooks/useEventListener';
-import { CDockForm, DockManager, useDockManager } from '@jakesee/react-dockpanel';
+import { DockManager, useDockManager } from '@jakesee/react-dockpanel';
+import { RenderFormEvent, RenderPanelEvent } from '@jakesee/react-dockpanel/dist/components/hooks';
 
 const EpisodesManager = () => {
 
@@ -115,21 +117,26 @@ const EpisodesManager = () => {
         }
     }, [dockManager]);
 
-    const onRenderForm = (form: CDockForm) => {
+    const onRenderForm = (e: RenderFormEvent) => {
 
-        switch (form.title) {
+        switch (e.form.name) {
             case 'Properties':
-                return <PropertiesControl instance={activeEpisode} />
+                e.content = <PropertiesControl instance={activeEpisode} />
+                break;
             case 'Appointment':
-                return <AppointmentsPanel appointments={appointments} />;
+                e.content = <AppointmentsPanel appointments={appointments} />;
+                break;
             case 'Chat':
-                return <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
+                e.content = <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />
+                break;
             case 'Episodes':
-                return <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />
+                e.content = <EpisodesPanel episodes={episodes!} activeEpisode={activeEpisode} onActivateChatCard={(e) => handleActivateEpisode(e)} />
+                break;
             case 'Case':
-                return <CasePanel episode={activeEpisode} />;
+                e.content = <CasePanel episode={activeEpisode} />;
+                break;
             case 'Profile':
-                return (
+                e.content = (
                     <div>
                         <MenuBar>
                             <VideoCameraFrontIcon /><MenuLabel>{`${session?.firstName} ${session?.lastName}`}</MenuLabel>
@@ -142,13 +149,36 @@ const EpisodesManager = () => {
                         </Menu>
                     </div>
                 );
+                break;
             default:
-                return <div>Unknown Form</div>
+                e.content = <div>Unknown Form</div>
+                break;
+        }
+    }
+
+    const onRenderPanel = (e: RenderPanelEvent) => {
+        const form = e.panel.forms[e.panel.activeForm];
+        switch (form.name) {
+            case 'Properties':
+                break;
+            case 'Appointment':
+                break;
+            case 'Chat':
+                break;
+            case 'Episodes':
+                break;
+            case 'Case':
+                e.content = <><FavoriteTwoToneIcon /> <span>Case</span></>
+                break;
+            case 'Profile':
+                break;
+            default:
+                break;
         }
     }
 
     return (
-        <DockManager manager={dockManager} onRenderForm={onRenderForm} />
+        <DockManager manager={dockManager} onRenderForm={onRenderForm} onRenderPanel={onRenderPanel} />
     )
 }
 
