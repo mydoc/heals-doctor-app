@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import MenuButton from '../MenuButton/MenuButton';
 import { IconButton, Menu, MenuItem } from "@mui/material";
-import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import MenuIcon from '@mui/icons-material/Menu';
 import Panel from '../../braincase/Form/Panel/Panel';
@@ -70,7 +69,6 @@ const CasePanel = ({ episode }: CasePanelProps) => {
                 {isCartOpen && <div>{Array(50).fill(0).map(i => Generator.randomSentence()).join(', ')}</div>}
             </TwoColumnView>
         }>
-            <FavoriteTwoToneIcon />
             <MenuButton id="file-button" onClick={e => handleClick(e, What.Patient)}>Patient</MenuButton>
             {!isPatientCase ? <></> : (
                 <>

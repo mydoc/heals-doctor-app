@@ -18,8 +18,7 @@ import { Episode, Message, MessageType  } from './interfaces/episode';
 import { User } from './interfaces/user';
 import PropertiesControl from './components/PropertiesControl/PropertiesControl';
 import useEventListener from './hooks/useEventListener';
-import { DockManager, useDockManager } from '@jakesee/react-dockpanel';
-import { RenderFormEvent, RenderPanelEvent } from '@jakesee/react-dockpanel/dist/components/hooks';
+import { DockManager, useDockManager, RenderEvent, CDockForm, CDockPanel } from '@jakesee/react-dockpanel';
 
 const EpisodesManager = () => {
 
@@ -117,9 +116,9 @@ const EpisodesManager = () => {
         }
     }, [dockManager]);
 
-    const onRenderForm = (e: RenderFormEvent) => {
+    const onRenderForm = (e: RenderEvent<CDockForm>) => {
 
-        switch (e.form.name) {
+        switch (e.item.name) {
             case 'Properties':
                 e.content = <PropertiesControl instance={activeEpisode} />
                 break;
@@ -156,8 +155,8 @@ const EpisodesManager = () => {
         }
     }
 
-    const onRenderPanel = (e: RenderPanelEvent) => {
-        const form = e.panel.forms[e.panel.activeForm];
+    const onRenderPanel = (e: RenderEvent<CDockPanel>) => {
+        const form = e.item.forms[e.item.activeIndex];
         switch (form.name) {
             case 'Properties':
                 break;
@@ -168,7 +167,7 @@ const EpisodesManager = () => {
             case 'Episodes':
                 break;
             case 'Case':
-                e.content = <><FavoriteTwoToneIcon /> <span>Case</span></>
+                e.content = <><FavoriteTwoToneIcon fontSize="small" /> <span>Case</span></>
                 break;
             case 'Profile':
                 break;
