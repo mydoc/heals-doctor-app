@@ -7,6 +7,7 @@ import { Database } from "./Database";
 import EpisodesManager from './EpisodesManager';
 
 import Generator from './utils/Generator';
+import { DockSystem } from './DockSystem';
 
 
 function App() {
@@ -27,7 +28,10 @@ function App() {
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path='/' element={<EpisodesManager />} />
+          <Route path='/' element={<DockSystem />} />
+          <Route path='/queue' element={<EpisodesManager />} />
+          <Route path='/progress' element={<EpisodesManager />} />
+          <Route path='/settings' element={<EpisodesManager />} />
         </Routes>
       </Router>
     </div>
