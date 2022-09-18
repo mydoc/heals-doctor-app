@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { ReactNode } from "react";
 import { Content, Slider, Wrapper } from "./MenuBar.styles";
 
 
 interface MenuBarProps {
-    children?: ReactElement | ReactElement[];
+    children?: ReactNode;
     anchor?: HTMLElement | null;
     style?: React.CSSProperties
 }

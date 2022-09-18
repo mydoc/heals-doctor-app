@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import MenuBar from "../../../components/MenuBar/MenuBar";
 import { Content, Wrapper } from "./Panel.styles";
 
 interface PanelProps {
     anchor?: HTMLElement | null,
-    children?: JSX.Element[],
-    control?: JSX.Element
+    children?: ReactNode,
+    control?: ReactNode
 }
 
 const Panel = ({anchor, children, control}: PanelProps) => (

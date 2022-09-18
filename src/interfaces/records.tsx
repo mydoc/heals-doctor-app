@@ -56,6 +56,17 @@ export interface IPrescription {
     doctorId: number,
     patientId: number,
     filename: string,
+    lineItems: IPrescriptionLineItem[]
+}
+
+export interface IPrescriptionLineItem {
+    id: number;
+    name: string;
+    quantity: number;
+    dosage: string;
+    route: string;
+    totalQty: number;
+    createAt: Date;
 }
 
 export interface IReferral {
