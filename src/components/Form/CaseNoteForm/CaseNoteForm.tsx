@@ -1,13 +1,16 @@
 import { User } from "../../../interfaces/user";
-import { Form, FormActions, FormField, FormFieldInput, FormFieldNote, FormSectionTitle, FormWrapper } from "../Form.styles";
+import { Form, FormActions, FormField, FormFieldInput, FormFieldNote, FormSectionTitle, FormTagList, FormWrapper } from "../Form.styles";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { IconButton } from "@mui/material";
 import SlideOut from "../../../braincase/Form/SlideOut/SlideOut";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Icd10Form from "../Icd10Form";
 import { IIcd10 } from "../../../interfaces/records";
 import ClearIcon from '@mui/icons-material/Clear';
 import { Icd10Item } from "./CaseNoteForm.styles"; // fix filename
+import { DataContext, IDataContext } from "../../../contexts/DataContext";
+import Generator from "../../../utils/Generator";
+import { IDrug } from "../../../interfaces/data";
 
 interface CasenoteFormProps {
     patient: User;
@@ -17,9 +20,27 @@ interface CasenoteFormProps {
 
 const CasenoteForm = ({ patient, onSubmit, onCancel }: CasenoteFormProps) => {
 
-    const [isIcd10Open, setIsIcd10Open] = useState(false);
+    // context
+    const { data } = useContext<IDataContext>(DataContext);
 
-    const [seletedIcd10, setSelectedIcd10] = useState<IIcd10[]>([]);
+    // UI states
+    const [isIcd10Open, setIsIcd10Open] = useState(false);
+    const [selectedIcd10, setSelectedIcd10] = useState<IIcd10[]>([]);
+    const [selectedDrug, setSelectedDrug] = useState<IDrug[]>([]);
+
+    // auto-suggest
+    const [suggestedDiagnosis, setSuggestedDiagnosis] = useState<IIcd10[]>();
+    const [suggestedDrug, setSuggestedDrug] = useState<IDrug[]>();
+
+    const updateSuggestions = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const found = Math.random() * 10 > 8;
+
+        if (found) {
+            const count = Generator.random(1, 5);
+            setSuggestedDiagnosis(Generator.any(data.icd10, count));
+            setSuggestedDrug(Generator.any(data.drugBank, count));
+        }
+    }
 
     return (
         <FormWrapper>
@@ -37,7 +58,7 @@ const CasenoteForm = ({ patient, onSubmit, onCancel }: CasenoteFormProps) => {
                 </FormField>
                 <FormField>
                     <label>Presenting Complaint(s)</label>
-                    <FormFieldInput><textarea></textarea></FormFieldInput>
+                    <FormFieldInput><textarea onChange={(e) => updateSuggestions(e)}></textarea></FormFieldInput>
                 </FormField>
                 <FormField>
                     <label>Private Notes</label>
@@ -47,7 +68,12 @@ const CasenoteForm = ({ patient, onSubmit, onCancel }: CasenoteFormProps) => {
                 <FormField>
                     <label>Diagnosis</label>
                     <IconButton onClick={() => setIsIcd10Open(true)}><PlaylistAddIcon /></IconButton>
-                    {seletedIcd10.map(icd => (
+                    <FormTagList>
+                        {suggestedDiagnosis?.map(d =>
+                            <li key={d.id} onClick={() => setSelectedIcd10(prev => [...prev, d])}>{d.desc}</li>
+                        )}
+                    </FormTagList>
+                    {selectedIcd10.map(icd => (
                         <Icd10Item className="code" key={icd.id}>
                             <div>{icd.code}</div>
                             <div>{icd.desc}</div>
@@ -60,13 +86,58 @@ const CasenoteForm = ({ patient, onSubmit, onCancel }: CasenoteFormProps) => {
                     <label>Notes for patient</label>
                     <FormFieldInput><textarea></textarea></FormFieldInput>
                 </FormField>
+
+                <FormField>
+                    <label>Prescription</label>
+                    <IconButton onClick={() => setIsIcd10Open(true)}><PlaylistAddIcon /></IconButton>
+                    {selectedDrug?.map(drug => (
+                        <Icd10Item className="code" key={drug.id}>
+                            <div>{drug.name}</div>
+                            <div>{drug.frequency}</div>
+                            <div className="icon"><IconButton onClick={() => setSelectedIcd10(prev => prev.filter(keep => keep.id !== drug.id))}><ClearIcon fontSize="small" /></IconButton></div>
+                        </Icd10Item>
+                    ))}
+                    <FormTagList>
+                        {suggestedDrug?.map(d =>
+                            <li key={d.id}>{d.name}</li>
+                        )}
+                    </FormTagList>
+                    <FormFieldInput><textarea /></FormFieldInput>
+                    <FormFieldInput>
+                        <table>
+                            <tr>
+                                <th>Drug</th>
+                                <th>Dosage</th>
+                                <th>Unit</th>
+                                <th>Frequency</th>
+                                <th>Duration</th>
+                                <th>Quantity</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </FormFieldInput>
+                </FormField>
+
+                <FormField>
+                    <label>Sales Items</label>
+                    <IconButton onClick={() => setIsIcd10Open(true)}><PlaylistAddIcon /></IconButton>
+                    <FormFieldInput><textarea /></FormFieldInput>
+                </FormField>
+
                 <FormActions>
                     <button type="submit">OK</button>
                     <button type="button" onClick={(e) => onCancel && onCancel(e)}>Cancel</button>
                 </FormActions>
             </Form>
             <SlideOut title="Select ICD10 diagnosis" open={isIcd10Open} onClose={() => setIsIcd10Open(false)}>
-                <Icd10Form selectedItems={seletedIcd10} onSelectItem={(item: IIcd10) => setSelectedIcd10(prev => [...prev, item])}/>
+                <Icd10Form selectedItems={selectedIcd10} onSelectItem={(item: IIcd10) => setSelectedIcd10(prev => [...prev, item])}/>
             </SlideOut>
         </FormWrapper>
     )

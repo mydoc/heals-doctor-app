@@ -64,10 +64,11 @@ const CasePanel = ({ episode }: CasePanelProps) => {
 
     return (
         <Panel anchor={anchor} control={
-            <TwoColumnView>
-                <div>{selectControl()}</div>
-                {isCartOpen && <div>{Array(50).fill(0).map(i => Generator.randomSentence()).join(', ')}</div>}
-            </TwoColumnView>
+            <div>{selectControl()}</div>
+            // <TwoColumnView>
+            //     <div>{selectControl()}</div>
+            //     <div>Billing</div>
+            // </TwoColumnView>
         }>
             <MenuButton id="file-button" onClick={e => handleClick(e, What.Patient)}>Patient</MenuButton>
             {!isPatientCase ? <></> : (

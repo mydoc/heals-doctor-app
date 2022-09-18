@@ -1,10 +1,11 @@
 import { Database } from "../Database";
-import { IDatabase } from "../interfaces/data";
+import { IDatabase, IDrug } from "../interfaces/data";
 import { AppointmentStatus, MessageType, EpisodeStatus, EpisodeType, IAppointment, IMessage, IEpisode } from "../interfaces/episode";
 import { IProvider } from "../interfaces/provider";
 import { ConsultedFor, ICasenote, ICasenoteRevision, IIcd10 } from "../interfaces/records";
 import { IUser, UserRole } from "../interfaces/user";
 import Icd10Descriptions from './icd10_codes';
+import * as druglist from './druglist';
 
 const RANDOM = {
     firstNames: ["Sarah", "Johnnie", "Wm", "Megan", "Lynn", "Andre", "Celia", "Delia", "Geoffrey", "Dora", "Fannie", "Colin", "Marlene", "Tammy", "Grady", "Lola", "Bonnie", "Luke", "Marta", "Russell", "Felix", "Kyle", "Ricardo", "Lois", "Vanessa", "Caleb", "Woodrow", "Joe", "Joel", "Christie", "Kevin", "April", "Ada", "Don", "Darnell", "Dixie", "Moses", "Guadalupe", "Marlon", "Bradley", "Blanca", "Esther", "Gail", "Laurie", "Amos", "Mitchell", "Joann", "Marsha", "Preston", "Jean", "Nick", "Antonia", "Carla", "Grant", "Shelia", "Natalie", "Sonya", "Christy", "Omar", "Jody", "Traci", "Judith", "Sherman", "Leroy", "Stacey", "Elmer", "Irene", "Guy", "Kerry", "Lawrence", "Hazel", "Karla", "Dianne", "Vincent", "Domingo", "Wilfred", "Dana", "Willie", "Misty", "Leslie", "Ken", "Lela", "Kelli", "Yvonne", "Orville", "Sonia", "Harriet", "Bernadette", "Jeannie", "Ted", "Mike", "Vivian", "Brooke", "Kara", "Zachary", "Evelyn", "Carl", "Cristina", "Candace", "Jerom"],
@@ -138,6 +139,7 @@ export default class Generator {
 
         // create icd10 list
         database.icd10 = this.randomIcd10Codes(30, 3);
+        database.drugBank = this.randomDrugBank();
 
         return database;
     }
@@ -334,5 +336,30 @@ export default class Generator {
         }
 
         return codes;
+    }
+
+    public static randomDrugBank() {
+
+        const randomDrugs: IDrug[] = [];
+        var index = 0;
+        druglist.drugNames.forEach(drug => {
+
+            const cost = this.random(0.10, 2.00);
+            const price = cost * 1.2;
+
+            randomDrugs.push({
+                id: index++,
+                name: drug,
+                unit: this.anyone(druglist.drugUnit),
+                quantity: this.random(5, 30),
+                dosage: "",
+                route: "",
+                frequency: this.anyone(druglist.drugFrequency),
+                cost: cost,
+                price: price
+            });
+        });
+
+        return randomDrugs;
     }
 }

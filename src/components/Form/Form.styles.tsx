@@ -87,3 +87,28 @@ export const FormActions = styled.div`
         cursor: pointer;
     }
 `;
+
+export const FormTagList = styled.ul`
+
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    li {
+        list-style: none;
+        padding: 3px 6px;
+        border: 1px solid #D0D7DE;
+        background-color: #cbddf7;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: var(--fontTiny);
+
+        :hover {
+            background-color: #b2cdf3;
+        }
+    }
+`

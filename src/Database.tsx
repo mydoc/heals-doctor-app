@@ -5,6 +5,7 @@ export const Database: IDatabase = {
     appointments: [], users: [], episodes: [],
     casenotes: [], casenoteRevisions: [],
     prescriptions: [], referrals: [], medicalCertificates: [], icd10: [],
+    drugBank: [],
 
     // define providers
     providers: [
