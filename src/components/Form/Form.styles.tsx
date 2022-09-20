@@ -31,7 +31,7 @@ export const FormField = styled.div`
 
 export const FormFieldNote = styled.div`
     color: #57606A;
-    font-size: var(--fontTiny);
+    font-size: var(--fontSmall);
     margin: 4px 0 2px 0;
     line-height: 18px;
 `
@@ -105,7 +105,7 @@ export const FormTagList = styled.ul`
         background-color: #cbddf7;
         border-radius: 5px;
         cursor: pointer;
-        font-size: var(--fontTiny);
+        font-size: var(--fontSmall);
 
         :hover {
             background-color: #b2cdf3;

@@ -61,6 +61,7 @@ export interface IPrescription {
 
 export interface IPrescriptionLineItem {
     id: number;
+    drugId: number;
     name: string;
     quantity: number;
     dosage: string;

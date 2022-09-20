@@ -20,6 +20,7 @@ import PropertiesControl from './components/PropertiesControl/PropertiesControl'
 import useEventListener from './hooks/useEventListener';
 import { DockManager, useDockManager, RenderEvent, CDockForm, CDockPanel } from './react-dockpanel';
 import PatientPanel from './components/PatientPanel/PatientPanel';
+import PatientCardPanel from './components/PatientPanel/PatientCardPanel';
 
 const ConsultationManager = () => {
 
@@ -98,8 +99,9 @@ const ConsultationManager = () => {
             const caseForm = dockManager.createForm('Case');
             const propertiesForm = dockManager.createForm('Properties')
             const patientForm = dockManager.createForm('Patient');
+            const patientForm2 = dockManager.createForm('Patient Card');
 
-            const episodesPanel = dockManager.createPanel([patientForm, chatForm, propertiesForm]);
+            const episodesPanel = dockManager.createPanel([patientForm, patientForm2, chatForm, propertiesForm]);
             const casePanel = dockManager.createPanel([caseForm]);
 
             const splitter = dockManager.createSplitter(episodesPanel, casePanel, false, 100);
@@ -120,6 +122,9 @@ const ConsultationManager = () => {
                 break;
             case 'Patient':
                 e.content = <PatientPanel patient={activeEpisode!.participants.find(u => u.role === UserRole.patient)!} />
+                break;
+            case 'Patient Card':
+                e.content = <PatientCardPanel patient={activeEpisode!.participants.find(u => u.role === UserRole.patient)!} />
                 break
             case 'Chat':
                 e.content = <ChatPanel episode={activeEpisode} onSendMessage={(e) => { handleSendMessage(e) }} />

@@ -10,7 +10,7 @@ export const Icd10Item = styled.div`
     border-top: 1px solid #eee;
 
     div {
-        font-size: var(--fontTiny);
+        font-size: var(--fontSmall);
     }
 
     .icon {
