@@ -23,13 +23,14 @@ const Wrapper = styled.div`
 
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 65px 1fr;
+    grid-template-columns: min-content 1fr;
 `
 
 const MainNav = styled.div`
-    background-color: #123764;
+    background-color: #293955;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: 10px;
 
     ul {
 
@@ -41,6 +42,7 @@ const MainNav = styled.div`
         gap: 30px;
 
         li {
+
             margin: 0;
             padding: 0;
             list-style: none;
@@ -57,6 +59,10 @@ const MainNav = styled.div`
                 padding: 0;
                 margin: 0;
             }
+
+            .icon-button {
+                font-size: 2.4rem;
+            }
         }
     }
 `
@@ -71,25 +77,6 @@ const ContentWrapper = styled.div`
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: 400px 1fr;
-`
-
-const PanelWrapper = styled.div`
-    background-color: #F7F7F7;
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: min-content 1fr;
-`
-
-const TitleBar = styled.div`
-    font-weight: bold;
-    padding: 16px;
-    border-bottom: 2px solid #E0E0E0;
-    background-color: white;
-    color: #292929;
 `
 
 
@@ -111,10 +98,10 @@ export const DockSystem = () => {
         <Wrapper>
             <MainNav>
                 <ul>
-                    <li><div><MdMenu style={{fontSize: '1.6rem'}} /></div><div>Menu</div></li>
-                    <li><div><FavoriteTwoToneIcon /></div><div>Favorite</div></li>
-                    <li><div><VideoCameraFrontIcon /></div><div>Video</div></li>
-                    <li><div><MdAccountBox style={{ fontSize: '1.6rem' }} /></div><div>Account</div></li>
+                    <li><div><MdMenu className="icon-button" /></div><div></div></li>
+                    <li><div><FavoriteTwoToneIcon className="icon-button" /></div><div></div></li>
+                    <li><div><VideoCameraFrontIcon className="icon-button" /></div><div></div></li>
+                    <li><div><MdAccountBox className="icon-button" /></div><div></div></li>
                 </ul>
             </MainNav>
             <ContentWrapper>

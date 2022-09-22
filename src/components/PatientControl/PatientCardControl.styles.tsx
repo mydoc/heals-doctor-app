@@ -48,9 +48,18 @@ export const Card = styled.div`
 
 
     div.key-bar {
-        font-size: 1.7rem;
-        font-weight: 400;
         margin-bottom: 1rem;
+
+        display: flex;
+
+        span {
+            font-size: 1.7rem;
+            font-weight: 400;
+        }
+
+        .icon-button {
+            margin-left: auto;
+        }
     }
 
     div.object-area {

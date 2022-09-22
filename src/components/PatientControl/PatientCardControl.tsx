@@ -46,7 +46,7 @@ const PatientCardControl = ({ patient }: PatientCardControlProps) => {
                 </Card>
                 <Card>
                     <div className="key-bar">
-                        National Identity
+                        <span>National Identity</span>
                         <IconButton className="icon-button" onClick={() => setEditForm('Edit Identification')}><EditIcon className="icon"/></IconButton>
                     </div>
                     <div className="object-area">
@@ -56,7 +56,7 @@ const PatientCardControl = ({ patient }: PatientCardControlProps) => {
                 </Card>
                 <Card>
                     <div className="key-bar">
-                        Medical Conditions
+                        <span>Medical Conditions</span>
                         <IconButton className="icon-button" onClick={() => setEditForm('Edit Medical Condition')}><EditIcon className="icon" /></IconButton></div>
                     <div className="object-area">
                         <div className="object-property"><div className="object-table-key">Conditions</div><div className="object-table-value">{patient.conditions}</div></div>
@@ -65,7 +65,7 @@ const PatientCardControl = ({ patient }: PatientCardControlProps) => {
                     </div>
                 </Card>
                 <Card>
-                    <div className="key-bar">Contact</div>
+                    <div className="key-bar"><span>Contact</span></div>
                     <div className="object-area">
                         <div className="object-property line"><div className="object-table-key">Email</div><div className="object-table-value">{patient.contact}</div></div>
                         <div className="object-property line"><div className="object-table-key">Phone</div><div className="object-table-value">{patient.email}</div></div>
@@ -75,7 +75,7 @@ const PatientCardControl = ({ patient }: PatientCardControlProps) => {
                 </Card>
                 <Card>
                     <div className="key-bar">
-                        Address
+                        <span>Address</span>
                         <IconButton className="icon-button"><EditIcon className="icon" /></IconButton>
                     </div>
                     <div className="object-area">
